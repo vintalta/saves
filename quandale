@@ -1,0 +1,23 @@
+while wait(10) do
+local players = game:GetService("Players")
+    for _, v in pairs(players:GetChildren()) do
+        if v.Name == players.LocalPlayer.Name then
+        else
+            local quandale = Instance.new("BillboardGui", v.Character.HumanoidRootPart)
+            quandale.Name = "qoundil"
+            quandale.Size = UDim2.new(10, 0, 10, 0)
+            quandale.AlwaysOnTop = true
+
+            local prison = Instance.new("Frame", quandale)
+            prison.Size = UDim2.new(1, 0, 1, 0)
+            prison.BackgroundTransparency = 1
+
+
+            local dingle = Instance.new("ImageLabel", prison)
+            dingle.Name = "dingles"
+            dingle.Size = UDim2.new(0.9, .9, 0.9, 0.9)
+            dingle.ZIndex = 2
+            dingle.Image = "http://www.roblox.com/asset/?id=9288240216"
+        end
+    end
+end
