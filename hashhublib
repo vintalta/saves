@@ -1334,7 +1334,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 Maximum = Configuration_Slider.Values.Maximum or 100,
                                 Default = Configuration_Slider.Values.Default or 0
                             },
-                            Script = Configuration_Slider.Script or function()
+                            Script = Configuration_Slider.Script or function(abc)
                                 end
                         }
 
