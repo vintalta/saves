@@ -1,0 +1,18 @@
+local ClientCooldownManager = require(game.ReplicatedStorage.Shared.CooldownManager).Client
+local Slots = nil
+for _, v in next, getgc() do
+    if islclosure(v) then
+        if getconstant(v, 48):match("test move") then
+            Slots = getupvalue(v, 4)
+        end
+    end
+end
+
+local AddCooldown = ClientCooldownManager.AddCooldown
+
+function ClientCooldownManager.AddCooldown(Slot, Time)
+    if Slots[Slot].Helper:find("Lightning") then
+        return AddCooldown(Slot, 0)
+    end
+    return AddCooldown(Slot, Time)
+end
