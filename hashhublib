@@ -1,6 +1,7 @@
 --  //    stop looking here
 --  //    made by bungie#4857
 
+
 --/ Locals
 local Player = game:GetService("Players").LocalPlayer
 local Mouse = Player:GetMouse()
@@ -189,7 +190,7 @@ function bungiesLibrary.Load(SelectedLibrary)
             design.Name = "design"
             design.Parent = private
             design.AnchorPoint = Vector2.new(0.5, 0.5)
-            design.BackgroundColor3 = Color3.fromRGB(128, 187, 219)
+            design.BackgroundColor3 = Color3.fromRGB(111, 83, 177)
             design.BorderColor3 = Color3.fromRGB(23, 23, 23)
             design.Position = UDim2.new(0.5, 0, 0.5, 0)
             design.Size = UDim2.new(0, 513, 0, 585)
@@ -537,7 +538,7 @@ function bungiesLibrary.Load(SelectedLibrary)
 
                     section_design.Name = "section_design"
                     section_design.Parent = section
-                    section_design.BackgroundColor3 = Color3.fromRGB(128, 187, 219)
+                    section_design.BackgroundColor3 = Color3.fromRGB(111, 83, 177)
                     section_design.BorderSizePixel = 0
                     section_design.Size = UDim2.new(0, 236, 0, 1)
 
@@ -661,7 +662,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_design_button_2.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(93, 71, 152))
                                 }
                             end
                         )
@@ -813,12 +814,12 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 local ToggleGradient =
                                     ToggleEnabled and
                                     ColorSequence.new {
-                                        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(128, 187, 219)),
-                                        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232)) or
-                                            ColorSequence.new {
-                                                ColorSequenceKeypoint.new(0.00, Color3.fromRGB(27, 27, 27)),
-                                                ColorSequenceKeypoint.new(1.00, Color3.fromRGB(29, 29, 29))
-                                            }
+                                        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(102, 78, 167)),
+                                        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(70, 53, 115))
+                                    } or
+                                    ColorSequence.new {
+                                        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(27, 27, 27)),
+                                        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(29, 29, 29))
                                     }
                                 gradient_design_button_toggle_2.Color = ToggleGradient
 
@@ -833,7 +834,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_design_button_toggle.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(93, 71, 152))
                                 }
                             end
                         )
@@ -1036,7 +1037,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_button_dropdown.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(93, 71, 152))
                                 }
                             end
                         )
@@ -1112,7 +1113,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                                 end
                                             end
                                         end
-                                        button_dropdown_text_2.TextColor3 = Color3.fromRGB(123, 182, 232)
+                                        button_dropdown_text_2.TextColor3 = Color3.fromRGB(116, 88, 188)
                                         button_dropdown_text.Text = "  " .. button_dropdown_text_2.Text
                                         design_dropdown.Size = UDim2.new(0, 221, 0, 16)
                                         dropdownIsOpen = false
@@ -1198,7 +1199,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                                 end
                                             end
                                         end
-                                        button_dropdown_text_2.TextColor3 = Color3.fromRGB(123, 182, 232)
+                                        button_dropdown_text_2.TextColor3 = Color3.fromRGB(116, 88, 188)
                                         button_dropdown_text.Text = "  " .. button_dropdown_text_2.Text
                                         design_dropdown.Size = UDim2.new(0, 221, 0, 16)
                                         dropdownIsOpen = false
@@ -1276,7 +1277,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                                 end
                                             end
                                         end
-                                        button_dropdown_text_2.TextColor3 = Color3.fromRGB(123, 182, 232)
+                                        button_dropdown_text_2.TextColor3 = Color3.fromRGB(116, 88, 188)
                                         button_dropdown_text.Text = "  " .. button_dropdown_text_2.Text
                                         design_dropdown.Size = UDim2.new(0, 221, 0, 16)
                                         dropdownIsOpen = false
@@ -1439,8 +1440,8 @@ function bungiesLibrary.Load(SelectedLibrary)
 
                         gradient_design_2_slider.Color =
                             ColorSequence.new {
-                            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(128, 187, 219)),
-                            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(110, 153, 202))
+                            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(102, 78, 167)),
+                            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(55, 42, 91))
                         }
                         gradient_design_2_slider.Rotation = 90
                         gradient_design_2_slider.Name = "gradient_design_2_slider"
@@ -1507,7 +1508,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_design_slider.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(93, 71, 152))
                                 }
                             end
                         )
@@ -1875,28 +1876,28 @@ function bungiesLibrary.Load(SelectedLibrary)
                         )
                         textbox.Focused:Connect(
                             function()
-                                local newTextboxSize =
-                                    TextService:GetTextSize(
-                                    textbox.Text,
-                                    textbox.TextSize,
-                                    textbox.Font,
-                                    Vector2.new(math.huge, math.huge)
-                                )
-                                TweenService:Create(
-                                    design_textbox_2_2,
-                                    TweenTable["textbox_autoscale"],
-                                    {Size = UDim2.new(0, newTextboxSize.X + 2, 0, 12)}
-                                ):Play()
-                                TweenService:Create(
-                                    textbox,
-                                    TweenTable["textbox_autoscale"],
-                                    {Size = UDim2.new(0, newTextboxSize.X, 0, 12)}
-                                ):Play()
-                                TweenService:Create(
-                                    design_textbox_2,
-                                    TweenTable["textbox_autoscale"],
-                                    {Size = UDim2.new(0, newTextboxSize.X + 4, 0, 14)}
-                                ):Play()
+                                    local newTextboxSize =
+                                        TextService:GetTextSize(
+                                        textbox.Text,
+                                        textbox.TextSize,
+                                        textbox.Font,
+                                        Vector2.new(math.huge, math.huge)
+                                    )
+                                    TweenService:Create(
+                                        design_textbox_2_2,
+                                        TweenTable["textbox_autoscale"],
+                                        {Size = UDim2.new(0, newTextboxSize.X + 2, 0, 12)}
+                                    ):Play()
+                                    TweenService:Create(
+                                        textbox,
+                                        TweenTable["textbox_autoscale"],
+                                        {Size = UDim2.new(0, newTextboxSize.X, 0, 12)}
+                                    ):Play()
+                                    TweenService:Create(
+                                        design_textbox_2,
+                                        TweenTable["textbox_autoscale"],
+                                        {Size = UDim2.new(0, newTextboxSize.X + 4, 0, 14)}
+                                    ):Play()
                             end
                         )
                         textbox:GetPropertyChangedSignal("Text"):Connect(
@@ -1931,21 +1932,21 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 if enterPressed then
                                     Configuration_TextBox.Script(textbox.Text)
                                 end
-                                TweenService:Create(
-                                    design_textbox_2_2,
-                                    TweenTable["textbox_autoscale"],
-                                    {Size = UDim2.new(0, 72, 0, 12)}
-                                ):Play()
-                                TweenService:Create(
-                                    textbox,
-                                    TweenTable["textbox_autoscale"],
-                                    {Size = UDim2.new(0, 72, 0, 12)}
-                                ):Play()
-                                TweenService:Create(
-                                    design_textbox_2,
-                                    TweenTable["textbox_autoscale"],
-                                    {Size = UDim2.new(0, 74, 0, 14)}
-                                ):Play()
+                                    TweenService:Create(
+                                        design_textbox_2_2,
+                                        TweenTable["textbox_autoscale"],
+                                        {Size = UDim2.new(0, 72, 0, 12)}
+                                    ):Play()
+                                    TweenService:Create(
+                                        textbox,
+                                        TweenTable["textbox_autoscale"],
+                                        {Size = UDim2.new(0, 72, 0, 12)}
+                                    ):Play()
+                                    TweenService:Create(
+                                        design_textbox_2,
+                                        TweenTable["textbox_autoscale"],
+                                        {Size = UDim2.new(0, 74, 0, 14)}
+                                    ):Play()
                             end
                         )
 
@@ -1954,7 +1955,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_design_textbox.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(93, 71, 152))
                                 }
                             end
                         )
@@ -2116,7 +2117,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                             Insert = "INS"
                         }
                         button_keybind.Text = shorts[Configuration_Keybind.Key.Name] or Configuration_Keybind.Key.Name
-
+                        
                         local chosenKeybind = Configuration_Keybind.Key
                         button_keybind.MouseButton1Click:Connect(
                             function()
@@ -2144,7 +2145,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_design_keybind_2.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(93, 71, 152))
                                 }
                             end
                         )
@@ -2278,12 +2279,12 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 local ToggleGradient =
                                     ToggleEnabled and
                                     ColorSequence.new {
-                                        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(128, 187, 219)),
-                                        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232)) or
-                                            ColorSequence.new {
-                                                ColorSequenceKeypoint.new(0.00, Color3.fromRGB(27, 27, 27)),
-                                                ColorSequenceKeypoint.new(1.00, Color3.fromRGB(29, 29, 29))
-                                            }
+                                        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(102, 78, 167)),
+                                        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(70, 53, 115))
+                                    } or
+                                    ColorSequence.new {
+                                        ColorSequenceKeypoint.new(0.00, Color3.fromRGB(27, 27, 27)),
+                                        ColorSequenceKeypoint.new(1.00, Color3.fromRGB(29, 29, 29))
                                     }
                                 gradient_design_button_toggle_2.Color = ToggleGradient
 
@@ -2300,7 +2301,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_design_button_toggle.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(93, 71, 152))
                                 }
                             end
                         )
@@ -2330,7 +2331,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                             button_toggle:Destroy()
                             UpdateSection()
                             UpdateSize()
-                        end
+                        end                        
                         return CheckTools
                     end
                     function SectionTools:CreateLabel(Configuration_Label)
@@ -2482,7 +2483,7 @@ function bungiesLibrary.Load(SelectedLibrary)
 
             design.Name = "design"
             design.Parent = notifications
-            design.BackgroundColor3 = Color3.fromRGB(128, 187, 219)
+            design.BackgroundColor3 = Color3.fromRGB(111, 83, 177)
             design.BorderColor3 = Color3.fromRGB(23, 23, 23)
             design.Position = UDim2.new(0.0193798449, 0, 0.0727272704, 0)
             design.Size = UDim2.new(0, 332, 0, 70)
@@ -2533,11 +2534,7 @@ function bungiesLibrary.Load(SelectedLibrary)
             design_2_cutoff.Position = UDim2.new(0, 0, 1, 0)
             design_2_cutoff.Size = UDim2.new(0, 326, 0, 1)
 
-            gradient_design_2_cutoff.Color =
-                ColorSequence.new {
-                ColorSequenceKeypoint.new(0.00, Color3.fromRGB(128, 187, 219)),
-                ColorSequenceKeypoint.new(1.00, Color3.fromRGB(110, 153, 202))
-            }
+            gradient_design_2_cutoff.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(102, 78, 167)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(55, 42, 91))}
             gradient_design_2_cutoff.Rotation = 90
             gradient_design_2_cutoff.Name = "gradient_design_2_cutoff"
             gradient_design_2_cutoff.Parent = design_2_cutoff
@@ -2562,18 +2559,12 @@ function bungiesLibrary.Load(SelectedLibrary)
             padding_note_notification.PaddingLeft = UDim.new(0, 4)
             padding_note_notification.PaddingRight = UDim.new(0, 4)
             padding_note_notification.PaddingTop = UDim.new(0, 4)
-
-            local newNotificationSize =
-                TextService:GetTextSize(
-                note_notification.Text,
-                note_notification.TextSize,
-                note_notification.Font,
-                Vector2.new(math.huge, math.huge)
-            )
+        
+            local newNotificationSize = TextService:GetTextSize(note_notification.Text, note_notification.TextSize, note_notification.Font, Vector2.new(math.huge, math.huge))
             design.Size = UDim2.new(0, 332, 0, newNotificationSize.Y + 40)
             design_1.Size = UDim2.new(0, 326, 0, newNotificationSize.Y + 34)
             note_notification.Size = UDim2.new(0, 326, 0, newNotificationSize.Y)
-
+            
             function des()
                 wait(Configuration.Time)
                 design:Destroy()
