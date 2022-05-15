@@ -1112,7 +1112,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                                 end
                                             end
                                         end
-                                        button_dropdown_text_2.TextColor3 = Color3.fromRGB(116, 88, 188)
+                                        button_dropdown_text_2.TextColor3 = Color3.fromRGB(123, 182, 232)
                                         button_dropdown_text.Text = "  " .. button_dropdown_text_2.Text
                                         design_dropdown.Size = UDim2.new(0, 221, 0, 16)
                                         dropdownIsOpen = false
@@ -1198,7 +1198,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                                 end
                                             end
                                         end
-                                        button_dropdown_text_2.TextColor3 = Color3.fromRGB(116, 88, 188)
+                                        button_dropdown_text_2.TextColor3 = Color3.fromRGB(123, 182, 232)
                                         button_dropdown_text.Text = "  " .. button_dropdown_text_2.Text
                                         design_dropdown.Size = UDim2.new(0, 221, 0, 16)
                                         dropdownIsOpen = false
@@ -1276,7 +1276,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                                 end
                                             end
                                         end
-                                        button_dropdown_text_2.TextColor3 = Color3.fromRGB(116, 88, 188)
+                                        button_dropdown_text_2.TextColor3 = Color3.fromRGB(123, 182, 232)
                                         button_dropdown_text.Text = "  " .. button_dropdown_text_2.Text
                                         design_dropdown.Size = UDim2.new(0, 221, 0, 16)
                                         dropdownIsOpen = false
