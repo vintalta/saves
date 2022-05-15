@@ -190,7 +190,7 @@ function bungiesLibrary.Load(SelectedLibrary)
             design.Name = "design"
             design.Parent = private
             design.AnchorPoint = Vector2.new(0.5, 0.5)
-            design.BackgroundColor3 = Color3.fromRGB(111, 83, 177)
+            design.BackgroundColor3 = Color3.fromRGB(128, 187, 219)
             design.BorderColor3 = Color3.fromRGB(23, 23, 23)
             design.Position = UDim2.new(0.5, 0, 0.5, 0)
             design.Size = UDim2.new(0, 513, 0, 585)
@@ -538,7 +538,7 @@ function bungiesLibrary.Load(SelectedLibrary)
 
                     section_design.Name = "section_design"
                     section_design.Parent = section
-                    section_design.BackgroundColor3 = Color3.fromRGB(111, 83, 177)
+                    section_design.BackgroundColor3 = Color3.fromRGB(128, 187, 219)
                     section_design.BorderSizePixel = 0
                     section_design.Size = UDim2.new(0, 236, 0, 1)
 
@@ -2483,7 +2483,7 @@ function bungiesLibrary.Load(SelectedLibrary)
 
             design.Name = "design"
             design.Parent = notifications
-            design.BackgroundColor3 = Color3.fromRGB(111, 83, 177)
+            design.BackgroundColor3 = Color3.fromRGB(128, 187, 219)
             design.BorderColor3 = Color3.fromRGB(23, 23, 23)
             design.Position = UDim2.new(0.0193798449, 0, 0.0727272704, 0)
             design.Size = UDim2.new(0, 332, 0, 70)
