@@ -1440,7 +1440,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                         gradient_design_2_slider.Color =
                             ColorSequence.new {
                             ColorSequenceKeypoint.new(0.00, Color3.fromRGB(128, 187, 219)),
-                            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(55, 42, 91))
+                            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(110, 153, 202))
                         }
                         gradient_design_2_slider.Rotation = 90
                         gradient_design_2_slider.Name = "gradient_design_2_slider"
@@ -2536,7 +2536,7 @@ function bungiesLibrary.Load(SelectedLibrary)
             gradient_design_2_cutoff.Color =
                 ColorSequence.new {
                 ColorSequenceKeypoint.new(0.00, Color3.fromRGB(128, 187, 219)),
-                ColorSequenceKeypoint.new(1.00, Color3.fromRGB(55, 42, 91))
+                ColorSequenceKeypoint.new(1.00, Color3.fromRGB(110, 153, 202))
             }
             gradient_design_2_cutoff.Rotation = 90
             gradient_design_2_cutoff.Name = "gradient_design_2_cutoff"
