@@ -662,7 +662,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_design_button_2.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(128, 187, 219))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
                                 }
                             end
                         )
@@ -834,7 +834,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_design_button_toggle.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(128, 187, 219))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
                                 }
                             end
                         )
@@ -1037,7 +1037,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_button_dropdown.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(128, 187, 219))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
                                 }
                             end
                         )
@@ -1508,7 +1508,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_design_slider.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(128, 187, 219))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
                                 }
                             end
                         )
@@ -1955,7 +1955,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_design_textbox.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(128, 187, 219))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
                                 }
                             end
                         )
@@ -2145,7 +2145,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_design_keybind_2.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(128, 187, 219))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
                                 }
                             end
                         )
@@ -2301,7 +2301,7 @@ function bungiesLibrary.Load(SelectedLibrary)
                                 gradient_design_button_toggle.Color =
                                     ColorSequence.new {
                                     ColorSequenceKeypoint.new(0.00, Color3.fromRGB(132, 100, 213)),
-                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(128, 187, 219))
+                                    ColorSequenceKeypoint.new(1.00, Color3.fromRGB(123, 182, 232))
                                 }
                             end
                         )
