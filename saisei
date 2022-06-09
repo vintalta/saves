@@ -1,0 +1,28 @@
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local Name = Player.Name
+
+local re = game:GetService("Workspace").Alive[Name].Sword
+local KillAura = true
+local Run = game:GetService("RunService")
+
+if KillAura then
+    Run.Heartbeat:Connect(
+        function()
+            task.wait(3)
+            for _, v in pairs(Players:GetPlayers()) do
+                if
+                    v ~= Player and
+                        (Player.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude <
+                            3
+                 then
+                    local args = { [1] = "Null", [2] = { ["DamageType"] = "Blood", ["Recharge"] = 0, ["HLength"] = 8, ["HasAltFire"] = true, ["WeaponArtRecharge"] = 0.75, ["IsSkill"] = false, ["Nilvar"] = 100, ["HandledPart"] = "RightGrip", ["Weight"] = 20, ["Stun"] = 0.25, ["HolsteredPart"] = "SwordHip", ["Sound"] = 6216173737, ["HWidth"] = 8 }, [3] = 5 } 
+                    re.Remote:FireServer(unpack(args))
+                    re.Remote:FireServer("Swing")
+                    re.Remote:FireServer("Damage", v.Character, "9")
+                    re.Remote:FireServer("ParryEnd")
+                end
+            end
+        end
+    )
+end
