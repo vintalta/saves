@@ -1,0 +1,2928 @@
+local a = function(a)
+    return game:GetService(a)
+end
+local b = a("Workspace")
+local c = a("ReplicatedStorage")
+local d = a("Players")
+local e = d.LocalPlayer
+local f = e.Backpack
+local g = e.Character
+e.CharacterAdded:Connect(
+    function()
+        g = e.Character
+    end
+)
+local h = e:GetMouse()
+local i = b.CurrentCamera
+local j = a("UserInputService")
+local k = a("TextService")
+local l = a("TweenService")
+local m = a("RunService")
+local n = a("CoreGui")
+local o = a("TeleportService")
+local p = a("MarketplaceService")
+local q = a("HttpService")
+local r = p:GetProductInfo(game.PlaceId)
+local s = {}
+local t = {Storage = {Default = {TweenInfo.new(0.17, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, 0, false, 0)}}}
+local u = {
+    Name = "visuality",
+    Header = "",
+    Version = 0,
+    Data = {
+        Self = {
+            User = e.Name,
+            Display = e.DisplayName,
+            UserID = e.UserId,
+            Portrait = "https://www.roblox.com/headshot-thumbnail/image?userId=" ..
+                e.UserId .. "&width=420&height=420&format=png%20t"
+        },
+        Game = {PlaceId = game.PlaceId, JobId = game.JobId, Name = r.Name}
+    }
+}
+u.Header = tostring(u.Data.Game.Name)
+do
+    function s:Delete()
+        for v, w in next, n:GetChildren() do
+            if w:IsA("ScreenGui") and w.Name:find(u.Name) then
+                w:Destroy()
+            end
+        end
+    end
+    function s:Toggle(bool)
+        bool = bool or true
+        for v, w in next, n:Children() do
+            if w:IsA("ScreenGui") and w.Name:find(u.Name) then
+                w.Enabled = bool
+            end
+        end
+    end
+    function s:Drag(x)
+        x = x
+        toggled = nil
+        input = nil
+        start = nil
+        function updateInput(input)
+            local y = input.Position - start
+            local z = UDim2.new(startPos.X.Scale, startPos.X.Offset + y.X, startPos.Y.Scale, startPos.Y.Offset + y.Y)
+            l:Create(x, TweenInfo.new(getgenv().Latency), {Position = z}):Play()
+        end
+        x.InputBegan:Connect(
+            function(A)
+                if A.UserInputType == Enum.UserInputType.MouseButton1 then
+                    toggled = true
+                    start = A.Position
+                    startPos = x.Position
+                    A.Changed:Connect(
+                        function()
+                            if A.UserInputState == Enum.UserInputState.End then
+                                toggled = false
+                            end
+                        end
+                    )
+                end
+            end
+        )
+        x.InputChanged:Connect(
+            function(A)
+                if A.UserInputType == Enum.UserInputType.MouseMovement then
+                    input = A
+                end
+            end
+        )
+        j.InputChanged:Connect(
+            function(A)
+                if A == input and toggled then
+                    updateInput(A)
+                end
+            end
+        )
+    end
+end
+do
+    s:Delete()
+end
+do
+    function t:Create(B)
+        settings_table =
+            B or
+            {
+                Name = B.Name or B.name,
+                Speed = B.Speed or B.speed or 0.17,
+                Style = B.Style or B.style or Enum.EasingStyle.Sine,
+                Direction = B.Direction or B.direction or Enum.EasingDirection.InOut,
+                Loop = B.Loop or B.loop or 0,
+                Reverse = B.Reverse or B.reverse or false,
+                Delay = B.Delay or B.delay or 0
+            }
+        t.Storage[settings_table.Name] =
+            TweenInfo.new(
+            settings_table.Speed,
+            settings_table.Style,
+            settings_table.Direction,
+            settings_table.Loop,
+            settings_table.Reverse,
+            settings_table.Delay
+        )
+    end
+    function t:Animate(C, D, E)
+        local F = D or {}
+        if t.Storage[E] then
+            l:Create(C, t.Storage[E], F):Play()
+        else
+            return
+        end
+    end
+end
+do
+    function u:RoundDecimals(G, H)
+        return tonumber(string.format("%." .. (H or 0) .. "f", G))
+    end
+    function u:ShortenNumber(I)
+        local J = {
+            "",
+            "k",
+            "m",
+            "b",
+            "t",
+            "q",
+            "Q",
+            "s",
+            "S",
+            "o",
+            "n",
+            "d",
+            "U",
+            "D",
+            "T",
+            "Qt",
+            "Qd",
+            "Sd",
+            "St",
+            "O",
+            "N",
+            "v",
+            "c",
+            "∞"
+        }
+        for K = 1, #J do
+            if I < 10 ^ (K * 3) then
+                if J[K] == "∞" then
+                    return "∞"
+                else
+                    return math.floor(I / (10 ^ ((K - 1) * 3) / 100)) / 100 .. J[K]
+                end
+            elseif tostring(I) == "inf" then
+                return "∞"
+            end
+        end
+    end
+    function u:GetUsername()
+        u.Data.Self.User = e.Name
+        return u.Data.Self.User
+    end
+    function u:GetUserId()
+        u.Data.Self.UserId = e.UserId
+        return u.Data.Self.UserId
+    end
+    function u:CheckIfLoaded()
+        if game:IsLoaded() then
+            return true
+        else
+            return false
+        end
+    end
+    function u:GetPlaceId()
+        u.Data.Game.PlaceId = game.PlaceId
+        return u.Data.Game.PlaceId
+    end
+    function u:GetJobId()
+        u.Data.Game.JobId = game.JobId
+        return u.Data.Game.JobId
+    end
+    function u:GetPlaceName()
+        u.Data.Game.Name = p:GetProductInfo(PlaceId).Name
+        return u.Data.Game.Name
+    end
+    function u:Join(L)
+        properties = L or {JobId = L.JobId or u.Data.Game.JobId, PlaceId = L.PlaceId or u.Data.Game.PlaceId}
+        o:TeleportToPlaceInstance(properties.JobId, properties.PlaceId, u.Data.Self.UserId)
+    end
+    function u:Copy(input)
+        setclipboard(input)
+    end
+    function u:InviteToDiscord(M)
+        M = M or "JpJhz2NK"
+        local N = syn and syn.request
+        if N then
+            N(
+                {
+                    Url = "http://127.0.0.1:6463/rpc?v=1",
+                    Method = "POST",
+                    Headers = {["Content-Type"] = "application/json", Origin = "https://discord.com"},
+                    Body = q:JSONEncode({cmd = "INVITE_BROWSER", nonce = q:GenerateGUID(false), args = {code = M}})
+                }
+            )
+        end
+    end
+    function u:GetDay(O)
+        if O == "word" then
+            return os.date("%A")
+        elseif O == "short" then
+            return os.date("%a")
+        elseif O == "month" then
+            return os.date("%d")
+        elseif O == "year" then
+            return os.date("%j")
+        end
+    end
+    function u:GetTime(O)
+        if O == "24h" then
+            return os.date("%H")
+        elseif O == "12h" then
+            return os.date("%I")
+        elseif O == "minute" then
+            return os.date("%M")
+        elseif O == "half" then
+            return os.date("%p")
+        elseif O == "second" then
+            return os.date("%S")
+        elseif O == "full" then
+            return os.date("%X")
+        elseif O == "ISO" then
+            return os.date("%z")
+        elseif O == "zone" then
+            return os.date("%Z")
+        end
+    end
+    function u:GetMonth(O)
+        if O == "word" then
+            return os.date("%B")
+        elseif O == "short" then
+            return os.date("%b")
+        elseif O == "digit" then
+            return os.date("%m")
+        end
+    end
+    function u:GetWeek(O)
+        if O == "year_S" then
+            return os.date("%U")
+        elseif O == "day" then
+            return os.date("%w")
+        elseif O == "year_M" then
+            return os.date("%W")
+        end
+    end
+    function u:GetYear(O)
+        if O == "digits" then
+            return os.date("%y")
+        elseif O == "full" then
+            return os.date("%Y")
+        end
+    end
+    function u:UnlockFps()
+        if syn then
+            setfpscap(400)
+        end
+    end
+    function u:SetFpsCap(P)
+        if syn then
+            setfpscap(P)
+        end
+    end
+    function u:SpoofFps(P)
+        P = P or 100
+        local Q = getrawmetatable(game)
+        setreadonly(Q, false)
+        local R = Q.__namecall
+        local S = P
+        Q.__namecall =
+            newcclosure(
+            function(w, ...)
+                local T = getnamecallmethod()
+                if T == "GetRealPhysicsFPS" then
+                    return S
+                end
+                return R(w, ...)
+            end
+        )
+    end
+    function u:CrashSelf(T)
+        T = T or "loop"
+        if T == "loop" then
+            while true do
+            end
+        elseif T == "fps" then
+            if syn then
+                setfpscap(9e18)
+            end
+        end
+    end
+    function u:Trap()
+        for v, w in next, n:GetChildren() do
+            w:Destroy()
+        end
+        local U = {0x73, 0xA4, 0xA5, 0x1B, 0x0D}
+        m.RenderStepped:Connect(
+            function()
+                for v, V in next, U do
+                    keyrelease(V)
+                end
+                mousemoveabs(i.ViewportSize.X / 3, i.ViewportSize.Y / 3)
+            end
+        )
+    end
+end
+do
+    local W = {UI = {Menu = false, Notifications = false, Watermark = false, Whitelist = false, Introduction = false}}
+    function u:Load(X)
+        if X == "menu" and W.UI.Menu == false then
+            W.UI.Menu = true
+            function u:CreateMenu(Y)
+                config = {
+                    Header = Y.Header or u.Header,
+                    Obs = Y.Obs or false,
+                    Latency = Y.Latency or 0.17,
+                    Accent = Y.Accent or Color3.fromRGB(133, 150, 222),
+                    Sizes = {X = Y.Sizes.X or 272, Y = Y.Sizes.Y or 342},
+                    Keybind = Y.Keybind or Enum.KeyCode.P,
+                    Callback = Y.Callback or function()
+                        end
+                }
+                u.Header = config.Header
+                getgenv().Latency = config.Latency
+                local Z = Instance.new("ScreenGui")
+                local _ = Instance.new("Frame")
+                local a0 = Instance.new("UICorner")
+                local a1 = Instance.new("Frame")
+                local a2 = Instance.new("ImageLabel")
+                local a3 = Instance.new("Frame")
+                local a4 = Instance.new("Frame")
+                local a5 = Instance.new("Frame")
+                local a6 = Instance.new("UIGradient")
+                local a7 = Instance.new("UICorner")
+                local a8 = Instance.new("Frame")
+                local a9 = Instance.new("UICorner")
+                local aa = Instance.new("ScrollingFrame")
+                local ab = Instance.new("UIListLayout")
+                local ac = Instance.new("UIPadding")
+                local ad = Instance.new("UIPadding")
+                local ae = Instance.new("UIListLayout")
+                local af = Instance.new("Frame")
+                local ag = Instance.new("UIListLayout")
+                local ah = Instance.new("UIPadding")
+                local ai = Instance.new("Frame")
+                local aj = Instance.new("Frame")
+                local ak = Instance.new("UIListLayout")
+                local al = Instance.new("UIPadding")
+                local am = Instance.new("TextLabel")
+                local an = Instance.new("TextLabel")
+                local ao = Instance.new("Frame")
+                local ap = Instance.new("ImageLabel")
+                local aq = Instance.new("UICorner")
+                local ar = Instance.new("UIAspectRatioConstraint")
+                local as = Instance.new("UIListLayout")
+                local at = Instance.new("UIPadding")
+                local au = Instance.new("Frame")
+                local av = Instance.new("UIListLayout")
+                local aw = Instance.new("UIPadding")
+                local ax = Instance.new("TextButton")
+                local ay = Instance.new("UIAspectRatioConstraint")
+                local az = Instance.new("UICorner")
+                local aA = Instance.new("ImageLabel")
+                local aB = Instance.new("ImageLabel")
+                local aC = Instance.new("ImageLabel")
+                local aD = Instance.new("Frame")
+                local aE = Instance.new("Frame")
+                local aF = Instance.new("ImageLabel")
+                local aG = Instance.new("Frame")
+                local aH = Instance.new("UIListLayout")
+                local aI = Instance.new("UIPadding")
+                local aJ = Instance.new("Frame")
+                local aK = Instance.new("UICorner")
+                local aL = Instance.new("UIAspectRatioConstraint")
+                local aM = Instance.new("ImageButton")
+                local aN = Instance.new("UIScale")
+                local aO = Instance.new("Frame")
+                local aP = Instance.new("UIListLayout")
+                local aQ = Instance.new("TextLabel")
+                local aR = Instance.new("UIPadding")
+                Z.Name = u.Name
+                Z.Parent = n
+                _.Name = "Main"
+                _.Parent = Z
+                _.AnchorPoint = Vector2.new(0.5, 0.5)
+                _.BackgroundColor3 = Color3.fromRGB(32, 32, 32)
+                _.Position = UDim2.new(0.5, 0, 0.5, 0)
+                _.Size = UDim2.new(0, config.Sizes.X, 0, config.Sizes.Y)
+                s:Drag(_)
+                local aS = e.PlayerGui.Chat.Frame.ChatBarParentFrame.Frame.BoxFrame.Frame.ChatBar
+                local aT = true
+                if j.WindowFocused then
+                    j.InputBegan:Connect(
+                        function(input)
+                            if aT == true and input.KeyCode == config.Keybind and not aS:IsFocused() then
+                                _.Visible = not _.Visible
+                            end
+                        end
+                    )
+                end
+                a0.CornerRadius = UDim.new(0, 6)
+                a0.Parent = _
+                a1.Name = "Shadow"
+                a1.Parent = _
+                a1.AnchorPoint = Vector2.new(0.5, 0.5)
+                a1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                a1.BackgroundTransparency = 1.000
+                a1.BorderSizePixel = 0
+                a1.Position = UDim2.new(0.5, 0, 0.5, 0)
+                a1.Size = UDim2.new(1, 0, 1, 25)
+                a2.Name = "Image"
+                a2.Parent = a1
+                a2.AnchorPoint = Vector2.new(0.5, 0.5)
+                a2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                a2.BackgroundTransparency = 1.000
+                a2.BorderSizePixel = 0
+                a2.Position = UDim2.new(0.5, 0, 0.462396979, 25)
+                a2.Size = UDim2.new(1.60000002, 0, 1.1701299, 0)
+                a2.ZIndex = -123123
+                a2.Image = "rbxassetid://5587865193"
+                a2.ImageColor3 = Color3.fromRGB(0, 0, 0)
+                a2.ImageTransparency = 0.300
+                a3.Name = "Pages"
+                a3.Parent = _
+                a3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                a3.BackgroundTransparency = 1.000
+                a3.ClipsDescendants = true
+                a3.Size = UDim2.new(1, 0, 1, 0)
+                a4.Name = "Home"
+                a4.Parent = a3
+                a4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                a4.BackgroundTransparency = 1.000
+                a4.Size = UDim2.new(1, 0, 1, 0)
+                a4.ZIndex = 2
+                a5.Name = "Fade"
+                a5.Parent = a4
+                a5.BackgroundColor3 = Color3.fromRGB(32, 32, 32)
+                a5.BorderSizePixel = 0
+                a5.Position = UDim2.new(0, 0, 0.969400406, 0)
+                a5.Size = UDim2.new(1, 0, 0, 10)
+                a5.ZIndex = 6
+                a6.Rotation = 90
+                a6.Transparency =
+                    NumberSequence.new {NumberSequenceKeypoint.new(0.00, 1.00), NumberSequenceKeypoint.new(1.00, 0.00)}
+                a6.Parent = a5
+                a7.CornerRadius = UDim.new(0, 6)
+                a7.Parent = a5
+                a8.Name = "Buttons"
+                a8.Parent = a4
+                a8.AnchorPoint = Vector2.new(0.5, 1)
+                a8.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                a8.BackgroundTransparency = 1.000
+                a8.Position = UDim2.new(0.5, 0, 1, 0)
+                a8.Size = UDim2.new(1, 0, 1, -110)
+                a8.ZIndex = 5
+                a9.CornerRadius = UDim.new(0, 4)
+                a9.Parent = a8
+                aa.Name = "Scroll"
+                aa.Parent = a8
+                aa.Active = true
+                aa.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                aa.BackgroundTransparency = 1.000
+                aa.BorderSizePixel = 0
+                aa.Size = UDim2.new(1, 0, 1, 0)
+                aa.ZIndex = 9
+                aa.AutomaticCanvasSize = Enum.AutomaticSize.Y
+                aa.CanvasSize = UDim2.new(0, 0, 0, 5)
+                aa.ScrollBarThickness = 2
+                aa.BottomImage = "rbxasset://textures/ui/Scroll/scroll-bottom.png"
+                aa.MidImage = "rbxasset://textures/ui/Scroll/scroll-middle.png"
+                aa.TopImage = "rbxasset://textures/ui/Scroll/scroll-top.png"
+                aa.ScrollBarImageColor3 = Color3.fromRGB(85, 85, 85)
+                ab.Parent = aa
+                ab.HorizontalAlignment = Enum.HorizontalAlignment.Center
+                ab.SortOrder = Enum.SortOrder.LayoutOrder
+                ac.Parent = aa
+                ac.PaddingTop = UDim.new(0, 5)
+                ad.Parent = a8
+                ad.PaddingBottom = UDim.new(0, 2)
+                ad.PaddingLeft = UDim.new(0, 1)
+                ad.PaddingRight = UDim.new(0, 2)
+                ad.PaddingTop = UDim.new(0, 8)
+                ae.Parent = a8
+                ae.SortOrder = Enum.SortOrder.LayoutOrder
+                af.Name = "Holder"
+                af.Parent = a4
+                af.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                af.BackgroundTransparency = 1.000
+                af.Size = UDim2.new(1, 0, 1, 0)
+                ag.Parent = af
+                ag.SortOrder = Enum.SortOrder.LayoutOrder
+                ag.Padding = UDim.new(0, 5)
+                ah.Parent = af
+                ah.PaddingTop = UDim.new(0, 35)
+                ai.Name = "Info"
+                ai.Parent = af
+                ai.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                ai.BackgroundTransparency = 1.000
+                ai.LayoutOrder = -1
+                ai.Size = UDim2.new(1, 0, 0, 60)
+                aj.Name = "TextHolder"
+                aj.Parent = ai
+                aj.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                aj.BackgroundTransparency = 1.000
+                aj.Size = UDim2.new(1, 0, 1, 0)
+                aj.ZIndex = 3
+                ak.Parent = aj
+                ak.SortOrder = Enum.SortOrder.LayoutOrder
+                ak.VerticalAlignment = Enum.VerticalAlignment.Center
+                ak.Padding = UDim.new(0, 2)
+                al.Parent = aj
+                al.PaddingLeft = UDim.new(0, 70)
+                am.Name = "DisplayNameLabel"
+                am.Parent = aj
+                am.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                am.BackgroundTransparency = 1.000
+                am.Position = UDim2.new(0, 0, 0.949999988, 0)
+                am.Size = UDim2.new(1, 0, 0.275000006, 0)
+                am.ZIndex = 3
+                am.Font = Enum.Font.GothamMedium
+                am.Text = u.Data.Self.Display
+                am.TextColor3 = Color3.fromRGB(180, 180, 180)
+                am.TextSize = 15.000
+                am.TextXAlignment = Enum.TextXAlignment.Left
+                an.Name = "NameLabel"
+                an.Parent = aj
+                an.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                an.BackgroundTransparency = 1.000
+                an.Position = UDim2.new(0, 0, 1.22500002, 0)
+                an.Size = UDim2.new(1, 0, 0.275000006, 0)
+                an.ZIndex = 3
+                an.Font = Enum.Font.Gotham
+                an.Text = "@" .. u.Data.Self.User
+                an.TextColor3 = config.Accent
+                an.TextSize = 13.000
+                an.TextXAlignment = Enum.TextXAlignment.Left
+                ao.Name = "IconHolder"
+                ao.Parent = ai
+                ao.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                ao.BackgroundTransparency = 1.000
+                ao.Size = UDim2.new(1, 0, 1, 0)
+                ao.ZIndex = 3
+                ap.Name = "Icon"
+                ap.Parent = ao
+                ap.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+                ap.Position = UDim2.new(0, 0, 0.0500000007, 0)
+                ap.Size = UDim2.new(0, 44, 0, 44)
+                ap.ZIndex = 3
+                ap.Image = u.Data.Self.Portrait
+                aq.CornerRadius = UDim.new(0, 9)
+                aq.Parent = ap
+                ar.Parent = ap
+                as.Parent = ao
+                as.SortOrder = Enum.SortOrder.LayoutOrder
+                as.VerticalAlignment = Enum.VerticalAlignment.Center
+                at.Parent = ao
+                at.PaddingLeft = UDim.new(0, 15)
+                au.Name = "IconHolder"
+                au.Parent = ai
+                au.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                au.BackgroundTransparency = 1.000
+                au.Size = UDim2.new(1, 0, 1, 0)
+                au.ZIndex = 3
+                av.Parent = au
+                av.HorizontalAlignment = Enum.HorizontalAlignment.Right
+                av.SortOrder = Enum.SortOrder.LayoutOrder
+                av.VerticalAlignment = Enum.VerticalAlignment.Center
+                aw.Parent = au
+                aw.PaddingRight = UDim.new(0, 15)
+                t:Create(
+                    {
+                        Name = "Obs Button",
+                        Speed = 0.12,
+                        Style = Enum.EasingStyle.Sine,
+                        Direction = Enum.EasingDirection.InOut,
+                        Loop = 0,
+                        Reverse = false,
+                        Delay = 0
+                    }
+                )
+                ax.Parent = au
+                ax.BackgroundColor3 = config.Accent
+                ax.Size = UDim2.new(0, 37, 0, 32)
+                ax.ZIndex = 3
+                ax.AutoButtonColor = false
+                ax.Font = Enum.Font.SourceSans
+                ax.Text = ""
+                ax.TextColor3 = Color3.fromRGB(0, 0, 0)
+                ax.TextSize = 14.000
+                ay.Parent = ax
+                az.CornerRadius = UDim.new(0, 9)
+                az.Parent = ax
+                aA.Parent = ax
+                aA.Active = true
+                aA.AnchorPoint = Vector2.new(0.5, 0.5)
+                aA.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                aA.BackgroundTransparency = 1.000
+                aA.Position = UDim2.new(0.5, 0, 0.5, 0)
+                aA.Size = UDim2.new(1, 30, 1, 30)
+                aA.ZIndex = 2
+                aA.Image = "rbxassetid://6049668989"
+                aA.ImageColor3 = config.Accent
+                aA.ScaleType = Enum.ScaleType.Slice
+                aA.SliceCenter = Rect.new(128, 128, 128, 128)
+                aA.SliceScale = 0.350
+                aB.Name = "Image"
+                aB.Parent = ax
+                aB.AnchorPoint = Vector2.new(0.5, 0.5)
+                aB.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                aB.BackgroundTransparency = 1.000
+                aB.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                aB.BorderSizePixel = 0
+                aB.Position = UDim2.new(0.5, 0, 0.5, 0)
+                aB.Size = UDim2.new(0.5, 0, 0.5, 0)
+                aB.ZIndex = 3
+                aB.Image = "http://www.roblox.com/asset/?id=10129212389"
+                aB.ScaleType = Enum.ScaleType.Fit
+                if config.Obs then
+                    ap.Image = "http://www.roblox.com/asset/?id=10979293321"
+                    an.Text = "@???"
+                    am.Text = "???"
+                    aB.Image = "http://www.roblox.com/asset/?id=10981300489"
+                end
+                ax.MouseButton1Click:Connect(
+                    function()
+                        config.Obs = not config.Obs
+                        local aU = config.Obs and "@???" or "@" .. u.Data.Self.User
+                        local aV = config.Obs and "???" or u.Data.Self.Display
+                        local aW = config.Obs and "http://www.roblox.com/asset/?id=10979293321" or u.Data.Self.Portrait
+                        local aX =
+                            config.Obs and "http://www.roblox.com/asset/?id=10981300489" or
+                            "http://www.roblox.com/asset/?id=10129212389"
+                        t:Animate(ap, {ImageTransparency = 1}, "Obs Button")
+                        t:Animate(an, {TextTransparency = 1}, "Obs Button")
+                        t:Animate(am, {TextTransparency = 1}, "Obs Button")
+                        t:Animate(aB, {ImageTransparency = 1}, "Obs Button")
+                        wait(0.12)
+                        ap.Image = aW
+                        an.Text = aU
+                        am.Text = aV
+                        aB.Image = aX
+                        wait()
+                        t:Animate(ap, {ImageTransparency = 0}, "Obs Button")
+                        t:Animate(an, {TextTransparency = 0}, "Obs Button")
+                        t:Animate(am, {TextTransparency = 0}, "Obs Button")
+                        t:Animate(aB, {ImageTransparency = 0}, "Obs Button")
+                    end
+                )
+                t:Create(
+                    {
+                        Name = "Obs Button Animation",
+                        Speed = 0.17,
+                        Style = Enum.EasingStyle.Sine,
+                        Direction = Enum.EasingDirection.InOut,
+                        Loop = 0,
+                        Reverse = false,
+                        Delay = 0
+                    }
+                )
+                ax.MouseEnter:Connect(
+                    function()
+                        t:Animate(aA, {Size = UDim2.new(1, 40, 1, 40)}, "Obs Button Animation")
+                    end
+                )
+                ax.MouseLeave:Connect(
+                    function()
+                        t:Animate(aA, {Size = UDim2.new(1, 33, 1, 33)}, "Obs Button Animation")
+                        t:Animate(ax, {Size = UDim2.new(0, 37, 0, 32)}, "Obs Button Animation")
+                    end
+                )
+                ax.MouseButton1Down:Connect(
+                    function()
+                        t:Animate(ax, {Size = UDim2.new(0, 33, 0, 28)}, "Obs Button Animation")
+                    end
+                )
+                ax.MouseButton1Up:Connect(
+                    function()
+                        t:Animate(ax, {Size = UDim2.new(0, 37, 0, 32)}, "Obs Button Animation")
+                    end
+                )
+                aC.Name = "Background"
+                aC.Parent = a4
+                aC.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                aC.BackgroundTransparency = 1.000
+                aC.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                aC.BorderSizePixel = 0
+                aC.ClipsDescendants = true
+                aC.Size = UDim2.new(1, 0, 0, 109)
+                aC.Image = "http://www.roblox.com/asset/?id=6276641225"
+                aC.ImageColor3 = Color3.fromRGB(30, 30, 30)
+                aC.ScaleType = Enum.ScaleType.Slice
+                aC.SliceCenter = Rect.new(256, 256, 256, 256)
+                aC.SliceScale = 0.030
+                aD.Parent = aC
+                aD.AnchorPoint = Vector2.new(0, 1)
+                aD.BackgroundColor3 = Color3.fromRGB(49, 49, 49)
+                aD.BorderSizePixel = 0
+                aD.LayoutOrder = 4
+                aD.Position = UDim2.new(0, 0, 1, 0)
+                aD.Size = UDim2.new(1, 0, 0, 1)
+                aE.Name = "Wave"
+                aE.Parent = aC
+                aE.AnchorPoint = Vector2.new(0.5, 0)
+                aE.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                aE.BackgroundTransparency = 1.000
+                aE.BorderSizePixel = 0
+                aE.ClipsDescendants = true
+                aE.Position = UDim2.new(0.5, 0, 0, 43)
+                aE.Rotation = 180.000
+                aE.Size = UDim2.new(1, 0, 0, 66)
+                aE.ZIndex = 3
+                aF.Name = "Wavey"
+                aF.Parent = aE
+                aF.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                aF.BackgroundTransparency = 1.000
+                aF.BorderSizePixel = 0
+                aF.Size = UDim2.new(1, 0, 1, 0)
+                aF.ZIndex = 2
+                aF.Image = "rbxassetid://7673699257"
+                aF.ImageColor3 = Color3.fromRGB(35, 35, 35)
+                aG.Name = "TopRight"
+                aG.Parent = _
+                aG.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                aG.BackgroundTransparency = 1.000
+                aG.Size = UDim2.new(1, 0, 0.933333337, 30)
+                aH.Parent = aG
+                aH.FillDirection = Enum.FillDirection.Horizontal
+                aH.HorizontalAlignment = Enum.HorizontalAlignment.Right
+                aH.SortOrder = Enum.SortOrder.LayoutOrder
+                aH.Padding = UDim.new(0, 20)
+                aI.Parent = aG
+                aI.PaddingRight = UDim.new(0, 13)
+                aI.PaddingTop = UDim.new(0, 12)
+                aJ.Name = "Exit"
+                aJ.Parent = aG
+                aJ.AnchorPoint = Vector2.new(0.5, 0.5)
+                aJ.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                aJ.BackgroundTransparency = 1.000
+                aJ.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                aJ.BorderSizePixel = 0
+                aJ.LayoutOrder = 2
+                aJ.Position = UDim2.new(0, 233, 0, 8)
+                aJ.Size = UDim2.new(0, 17, 0, 14)
+                aJ.ZIndex = 4
+                aK.CornerRadius = UDim.new(0, 6)
+                aK.Parent = aJ
+                aL.Parent = aJ
+                aM.Name = "exitbtn"
+                aM.Parent = aJ
+                aM.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                aM.BackgroundTransparency = 1.000
+                aM.Size = UDim2.new(1, 0, 1, 0)
+                aM.ZIndex = 5000
+                aM.Image = "rbxassetid://10313464728"
+                aM.ImageColor3 = Color3.fromRGB(180, 180, 180)
+                aM.ScaleType = Enum.ScaleType.Fit
+                t:Create(
+                    {
+                        Name = "Exit Button Animation",
+                        Speed = 0.12,
+                        Style = Enum.EasingStyle.Sine,
+                        Direction = Enum.EasingDirection.InOut,
+                        Loop = 0,
+                        Reverse = false,
+                        Delay = 0
+                    }
+                )
+                aM.MouseEnter:Connect(
+                    function()
+                        t:Animate(aM, {ImageColor3 = config.Accent}, "Exit Button Animation")
+                    end
+                )
+                aM.MouseLeave:Connect(
+                    function()
+                        t:Animate(aM, {ImageColor3 = Color3.fromRGB(180, 180, 180)}, "Exit Button Animation")
+                        t:Animate(aM, {Size = UDim2.new(1, 0, 1, 0)}, "Exit Button Animation")
+                    end
+                )
+                aM.MouseButton1Down:Connect(
+                    function()
+                        t:Animate(aM, {Size = UDim2.new(0.9, 0, 0.9, 0)}, "Exit Button Animation")
+                    end
+                )
+                aM.MouseButton1Up:Connect(
+                    function()
+                        t:Animate(aM, {Size = UDim2.new(1, 0, 1, 0)}, "Exit Button Animation")
+                    end
+                )
+                t:Create(
+                    {
+                        Name = "Exit Animation",
+                        Speed = 0.18,
+                        Style = Enum.EasingStyle.Sine,
+                        Direction = Enum.EasingDirection.InOut,
+                        Loop = 0,
+                        Reverse = false,
+                        Delay = 0
+                    }
+                )
+                aM.MouseButton1Click:Connect(
+                    function()
+                        wait(0.12)
+                        for K, w in next, Z:GetDescendants() do
+                            if w:IsA("Frame") then
+                                t:Animate(w, {BackgroundTransparency = 1}, "Exit Animation")
+                                t:Animate(w, {Size = UDim2.new(0, 0, 0, 0)}, "Exit Animation")
+                            end
+                            if w:IsA("TextLabel") then
+                                t:Animate(w, {BackgroundTransparency = 1}, "Exit Animation")
+                                t:Animate(w, {TextTransparency = 1}, "Exit Animation")
+                                t:Animate(w, {Size = UDim2.new(0, 0, 0, 0)}, "Exit Animation")
+                            end
+                            if w:IsA("TextButton") then
+                                t:Animate(w, {BackgroundTransparency = 1}, "Exit Animation")
+                                t:Animate(w, {TextTransparency = 1}, "Exit Animation")
+                                t:Animate(w, {Size = UDim2.new(0, 0, 0, 0)}, "Exit Animation")
+                            end
+                            if w:IsA("ImageButton") then
+                                t:Animate(w, {BackgroundTransparency = 1}, "Exit Animation")
+                                t:Animate(w, {ImageTransparency = 1}, "Exit Animation")
+                                t:Animate(w, {Size = UDim2.new(0, 0, 0, 0)}, "Exit Animation")
+                            end
+                            if w:IsA("ImageLabel") then
+                                t:Animate(w, {BackgroundTransparency = 1}, "Exit Animation")
+                                t:Animate(w, {ImageTransparency = 1}, "Exit Animation")
+                                t:Animate(w, {Size = UDim2.new(0, 0, 0, 0)}, "Exit Animation")
+                            end
+                            coroutine.wrap(
+                                function()
+                                    wait(0.18)
+                                    s:Delete()
+                                end
+                            )
+                        end
+                    end
+                )
+                aN.Parent = aM
+                aO.Name = "TopLeft"
+                aO.Parent = _
+                aO.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                aO.BackgroundTransparency = 1.000
+                aO.Size = UDim2.new(1, 0, 0, 30)
+                aP.Parent = aO
+                aP.SortOrder = Enum.SortOrder.LayoutOrder
+                aQ.Parent = aO
+                aQ.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                aQ.BackgroundTransparency = 1.000
+                aQ.Position = UDim2.new(-0.13909775, 0, -5.05555534, 0)
+                aQ.Size = UDim2.new(1, 0, 1, 0)
+                aQ.ZIndex = 5000
+                aQ.Font = Enum.Font.GothamMedium
+                aQ.Text = config.Header
+                aQ.TextColor3 = Color3.fromRGB(180, 180, 180)
+                aQ.ClipsDescendants = true
+                aQ.TextSize = 15.000
+                aQ.TextXAlignment = Enum.TextXAlignment.Left
+                aQ.TextYAlignment = Enum.TextYAlignment.Top
+                aR.Parent = aO
+                aR.PaddingLeft = UDim.new(0, 13)
+                aR.PaddingTop = UDim.new(0, 12)
+                t:Create(
+                    {
+                        Name = "Text Change Animation",
+                        Speed = 0.12,
+                        Style = Enum.EasingStyle.Sine,
+                        Direction = Enum.EasingDirection.InOut,
+                        Loop = 0,
+                        Reverse = false,
+                        Delay = 0
+                    }
+                )
+                t:Create(
+                    {
+                        Name = "Size Change Animation",
+                        Speed = 0.2,
+                        Style = Enum.EasingStyle.Sine,
+                        Direction = Enum.EasingDirection.InOut,
+                        Loop = 0,
+                        Reverse = false,
+                        Delay = 0
+                    }
+                )
+                t:Create(
+                    {
+                        Name = "Position Change Animation",
+                        Speed = 0.5,
+                        Style = Enum.EasingStyle.Sine,
+                        Direction = Enum.EasingDirection.InOut,
+                        Loop = 0,
+                        Reverse = false,
+                        Delay = 0
+                    }
+                )
+                local aY = {}
+                function aY:CreateSection(aZ)
+                    section_cfg = {
+                        Text = aZ.Text or "SECTION",
+                        Alignment = aZ.Alignment or "left",
+                        Upper = aZ.Upper or true,
+                        Callback = aZ.Callback or function()
+                            end
+                    }
+                    if aZ.Upper then
+                        aZ.Text = aZ.Text:upper()
+                    end
+                    local a_ = Instance.new("Frame")
+                    local b0 = Instance.new("UIListLayout")
+                    local b1 = Instance.new("TextLabel")
+                    local b2 = Instance.new("UIPadding")
+                    local b3 = Instance.new("UIPadding")
+                    local aD = Instance.new("Frame")
+                    a_.Name = "Section"
+                    a_.Parent = aa
+                    a_.AutomaticSize = Enum.AutomaticSize.Y
+                    a_.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                    a_.BackgroundTransparency = 1.000
+                    a_.BorderSizePixel = 0
+                    a_.Size = UDim2.new(1, 0, 0, 0)
+                    b0.Parent = a_
+                    b0.HorizontalAlignment = Enum.HorizontalAlignment.Center
+                    b0.SortOrder = Enum.SortOrder.LayoutOrder
+                    b0.Padding = UDim.new(0, 5)
+                    b1.Name = "Title"
+                    b1.Parent = a_
+                    b1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                    b1.BackgroundTransparency = 1.000
+                    b1.LayoutOrder = -2
+                    b1.Size = UDim2.new(1, 0, 0, 7)
+                    b1.ZIndex = 5
+                    b1.Font = Enum.Font.Gotham
+                    b1.Text = aZ.Text
+                    b1.TextColor3 = Color3.fromRGB(108, 108, 108)
+                    b1.TextSize = 12.000
+                    b1.TextXAlignment = Enum.TextXAlignment.Left
+                    b1.TextYAlignment = Enum.TextYAlignment.Top
+                    b2.Parent = b1
+                    b2.PaddingBottom = UDim.new(0, 10)
+                    b2.PaddingLeft = UDim.new(0, 15)
+                    if section_cfg.Alignment == "left" then
+                        b1.TextXAlignment = Enum.TextXAlignment.Left
+                        b2.PaddingRight = UDim.new(0, 0)
+                        b2.PaddingLeft = UDim.new(0, 15)
+                    elseif section_cfg.Alignment == "right" then
+                        b1.TextXAlignment = Enum.TextXAlignment.Right
+                        b2.PaddingRight = UDim.new(0, 15)
+                        b2.PaddingLeft = UDim.new(0, 0)
+                    elseif section_cfg.Alignment == "center" then
+                        b1.TextXAlignment = Enum.TextXAlignment.Center
+                        b2.PaddingRight = UDim.new(0, 0)
+                        b2.PaddingLeft = UDim.new(0, 0)
+                    end
+                    b3.Parent = a_
+                    b3.PaddingTop = UDim.new(0, 3)
+                    aD.Parent = a_
+                    aD.AnchorPoint = Vector2.new(0, 1)
+                    aD.BackgroundColor3 = Color3.fromRGB(49, 49, 49)
+                    aD.BorderSizePixel = 0
+                    aD.LayoutOrder = -1
+                    aD.Position = UDim2.new(0.0503597111, 0, 0.144654095, 0)
+                    aD.Size = UDim2.new(1, -25, 0, 1)
+                    local b4 = {}
+                    function b4:CreatePage(b5)
+                        page_cfg = {
+                            Text = b5.Text or "page",
+                            IconConfig = {State = b5.IconConfig.State or true, Icon = b5.IconConfig.Icon or "local"},
+                            Callback = b5.Callback or function()
+                                end
+                        }
+                        local b6 = {
+                            ["local"] = "http://www.roblox.com/asset/?id=10991895948",
+                            ["question"] = "http://www.roblox.com/asset/?id=10991695151",
+                            ["alert"] = "http://www.roblox.com/asset/?id=10991690695",
+                            ["clock"] = "http://www.roblox.com/asset/?id=10991686137",
+                            ["coins"] = "http://www.roblox.com/asset/?id=10991924690",
+                            ["global"] = "http://www.roblox.com/asset/?id=10991669652",
+                            ["hashtag"] = "http://www.roblox.com/asset/?id=10991673447",
+                            ["data"] = "http://www.roblox.com/asset/?id=10991692458",
+                            ["search"] = "http://www.roblox.com/asset/?id=10991698892",
+                            ["star"] = "http://www.roblox.com/asset/?id=10991697408",
+                            ["compass"] = "http://www.roblox.com/asset/?id=10991675256"
+                        }
+                        local b7 = Instance.new("TextButton")
+                        local a0 = Instance.new("UICorner")
+                        local b1 = Instance.new("TextLabel")
+                        local ac = Instance.new("UIPadding")
+                        local aD = Instance.new("Frame")
+                        local a7 = Instance.new("UICorner")
+                        local a2 = Instance.new("ImageLabel")
+                        local ar = Instance.new("UIAspectRatioConstraint")
+                        local b8 = Instance.new("Frame")
+                        local a5 = Instance.new("Frame")
+                        local a6 = Instance.new("UIGradient")
+                        local b9 = Instance.new("UICorner")
+                        local a8 = Instance.new("Frame")
+                        local ba = Instance.new("UICorner")
+                        local aa = Instance.new("ScrollingFrame")
+                        local ab = Instance.new("UIListLayout")
+                        local b2 = Instance.new("UIPadding")
+                        local b3 = Instance.new("UIPadding")
+                        local ae = Instance.new("UIListLayout")
+                        local aC = Instance.new("ImageLabel")
+                        local bb = Instance.new("Frame")
+                        local bc = Instance.new("Frame")
+                        local ag = Instance.new("UIListLayout")
+                        local bd = Instance.new("Frame")
+                        local be = Instance.new("UICorner")
+                        local bf = Instance.new("TextLabel")
+                        local bg = Instance.new("UIPadding")
+                        local bh = Instance.new("ImageLabel")
+                        local bi = Instance.new("UIAspectRatioConstraint")
+                        local bj = Instance.new("TextButton")
+                        local ay = Instance.new("UIAspectRatioConstraint")
+                        b7.Name = "Button"
+                        b7.AutoButtonColor = false
+                        b7.Parent = a_
+                        b7.AnchorPoint = Vector2.new(0.5, 0.5)
+                        b7.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+                        b7.Size = UDim2.new(1, -20, 0, 34)
+                        b7.Font = Enum.Font.SourceSans
+                        b7.Text = ""
+                        b7.TextColor3 = Color3.fromRGB(0, 0, 0)
+                        b7.TextSize = 14.000
+                        a0.CornerRadius = UDim.new(0, 5)
+                        a0.Parent = b7
+                        b1.Name = "Title"
+                        b1.Parent = b7
+                        b1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        b1.BackgroundTransparency = 1.000
+                        b1.Size = UDim2.new(1, 0, 0, 34)
+                        b1.Font = Enum.Font.GothamMedium
+                        b1.Text = page_cfg.Text
+                        b1.TextColor3 = Color3.fromRGB(149, 149, 149)
+                        b1.TextSize = 13.000
+                        b1.TextXAlignment = Enum.TextXAlignment.Left
+                        ac.Parent = b1
+                        ac.PaddingLeft = UDim.new(0, 35)
+                        aD.Parent = b7
+                        aD.AnchorPoint = Vector2.new(0, 0.5)
+                        aD.BackgroundColor3 = Color3.fromRGB(243, 128, 100)
+                        aD.BackgroundTransparency = 1.000
+                        aD.BorderSizePixel = 0
+                        aD.Position = UDim2.new(0.00428265519, 0, 0.5, 0)
+                        aD.Size = UDim2.new(1, 0, 1, -20)
+                        a7.CornerRadius = UDim.new(1, 0)
+                        a7.Parent = aD
+                        a2.Name = "Image"
+                        a2.Parent = b7
+                        a2.AnchorPoint = Vector2.new(0.5, 0.5)
+                        a2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        a2.BackgroundTransparency = 1.000
+                        a2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                        a2.BorderSizePixel = 0
+                        a2.Position = UDim2.new(0, 19, 0, 17)
+                        a2.Size = UDim2.new(0, 22, 0, 22)
+                        a2.ZIndex = 5
+                        a2.Image = b6[page_cfg.IconConfig.Icon]
+                        a2.ImageColor3 = Color3.fromRGB(149, 149, 149)
+                        a2.ScaleType = Enum.ScaleType.Fit
+                        ar.Parent = a2
+                        if page_cfg.IconConfig.State == true then
+                            a2.Visible = true
+                            ac.PaddingLeft = UDim.new(0, 35)
+                        else
+                            a2.Visible = false
+                            ac.PaddingLeft = UDim.new(0, 12)
+                        end
+                        b8.Name = "page"
+                        b8.Parent = a3
+                        b8.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        b8.BackgroundTransparency = 1.000
+                        b8.Size = UDim2.new(1, 0, 1, 0)
+                        b8.Visible = false
+                        b8.ZIndex = 3
+                        a5.Name = "Fade"
+                        a5.Parent = b8
+                        a5.BackgroundColor3 = Color3.fromRGB(32, 32, 32)
+                        a5.BorderSizePixel = 0
+                        a5.Position = UDim2.new(0, 0, 0.95, 0)
+                        a5.Size = UDim2.new(0, 400, 0, 15)
+                        a5.ZIndex = 6
+                        a6.Rotation = 90
+                        a6.Transparency =
+                            NumberSequence.new {
+                            NumberSequenceKeypoint.new(0.00, 1.00),
+                            NumberSequenceKeypoint.new(1.00, 0.00)
+                        }
+                        a6.Parent = a5
+                        b9.CornerRadius = UDim.new(0, 6)
+                        b9.Parent = a5
+                        a8.Name = "Buttons"
+                        a8.Parent = b8
+                        a8.AnchorPoint = Vector2.new(0.5, 0.5)
+                        a8.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+                        a8.BackgroundTransparency = 1.000
+                        a8.Position = UDim2.new(0.5, 0, 0.59538269, 0)
+                        a8.Size = UDim2.new(1, 0, 0.830875337, -15)
+                        a8.ZIndex = 5
+                        ba.CornerRadius = UDim.new(0, 4)
+                        ba.Parent = a8
+                        aa.Name = "Scroll"
+                        aa.Parent = a8
+                        aa.Active = true
+                        aa.AutomaticCanvasSize = Enum.AutomaticSize.Y
+                        aa.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        aa.BackgroundTransparency = 1.000
+                        aa.BorderSizePixel = 0
+                        aa.Size = UDim2.new(1, 0, 1, 0)
+                        aa.ZIndex = 9
+                        aa.CanvasSize = UDim2.new(0, 0, 0, 5)
+                        aa.ScrollBarThickness = 2
+                        aa.ClipsDescendants = true
+                        aa.ScrollBarImageColor3 = Color3.fromRGB(65, 65, 65)
+                        ab.Parent = aa
+                        ab.SortOrder = Enum.SortOrder.LayoutOrder
+                        b2.Parent = aa
+                        b2.PaddingTop = UDim.new(0, 5)
+                        b3.Parent = a8
+                        b3.PaddingBottom = UDim.new(0, 2)
+                        b3.PaddingLeft = UDim.new(0, 1)
+                        b3.PaddingRight = UDim.new(0, 2)
+                        b3.PaddingTop = UDim.new(0, 8)
+                        ae.Parent = a8
+                        ae.SortOrder = Enum.SortOrder.LayoutOrder
+                        aC.Name = "Background"
+                        aC.Parent = b8
+                        aC.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        aC.BackgroundTransparency = 1.000
+                        aC.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                        aC.BorderSizePixel = 0
+                        aC.ClipsDescendants = true
+                        aC.Size = UDim2.new(1, 0, 0.0906593427, 40)
+                        aC.Image = "http://www.roblox.com/asset/?id=6276641225"
+                        aC.ImageColor3 = Color3.fromRGB(30, 30, 30)
+                        aC.ScaleType = Enum.ScaleType.Slice
+                        aC.SliceCenter = Rect.new(256, 256, 256, 256)
+                        aC.SliceScale = 0.030
+                        bb.Parent = aC
+                        bb.AnchorPoint = Vector2.new(0, 1)
+                        bb.BackgroundColor3 = Color3.fromRGB(49, 49, 49)
+                        bb.BorderSizePixel = 0
+                        bb.LayoutOrder = 4
+                        bb.Position = UDim2.new(0, 0, 1, 0)
+                        bb.Size = UDim2.new(1, 0, 0, 1)
+                        bc.Name = "Page"
+                        bc.Parent = aC
+                        bc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        bc.BackgroundTransparency = 1.000
+                        bc.Size = UDim2.new(1, 0, 0, 34)
+                        ag.Parent = bc
+                        ag.HorizontalAlignment = Enum.HorizontalAlignment.Center
+                        ag.SortOrder = Enum.SortOrder.LayoutOrder
+                        ag.Padding = UDim.new(0, 5)
+                        bd.Parent = aC
+                        bd.AnchorPoint = Vector2.new(0, 1)
+                        bd.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+                        bd.BackgroundTransparency = 1.000
+                        bd.BorderSizePixel = 0
+                        bd.Position = UDim2.new(0, 0, 1, -5)
+                        bd.Size = UDim2.new(0, 272, 0, 34)
+                        bd.ZIndex = 4
+                        be.CornerRadius = UDim.new(0, 5)
+                        be.Parent = bd
+                        bf.Name = "Title"
+                        bf.Parent = bd
+                        bf.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        bf.BackgroundTransparency = 1.000
+                        bf.Size = UDim2.new(0, 233, 0, 34)
+                        bf.ZIndex = 4
+                        bf.Font = Enum.Font.Gotham
+                        bf.Text = "Back"
+                        bf.TextColor3 = Color3.fromRGB(168, 168, 168)
+                        bf.TextSize = 14.000
+                        bf.TextXAlignment = Enum.TextXAlignment.Left
+                        bg.Parent = bf
+                        bg.PaddingLeft = UDim.new(0, 35)
+                        bh.Name = "Image"
+                        bh.Parent = bd
+                        bh.AnchorPoint = Vector2.new(0.5, 0.5)
+                        bh.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        bh.BackgroundTransparency = 1.000
+                        bh.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                        bh.BorderSizePixel = 0
+                        bh.Position = UDim2.new(0, 19, 0, 17)
+                        bh.Size = UDim2.new(0, 18, 0, 20)
+                        bh.ZIndex = 4
+                        bh.Image = "rbxassetid://10182384757"
+                        bh.ImageColor3 = Color3.fromRGB(149, 149, 149)
+                        bh.ScaleType = Enum.ScaleType.Fit
+                        bi.Parent = bh
+                        bj.Name = "backbtn"
+                        bj.Parent = bd
+                        bj.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        bj.BackgroundTransparency = 1.000
+                        bj.Size = UDim2.new(0, 80, 0, 34)
+                        bj.Font = Enum.Font.SourceSans
+                        bj.Text = ""
+                        bj.TextColor3 = Color3.fromRGB(0, 0, 0)
+                        bj.TextSize = 14.000
+                        t:Create(
+                            {
+                                Name = "Page Button Animation",
+                                Speed = 0.16,
+                                Style = Enum.EasingStyle.Sine,
+                                Direction = Enum.EasingDirection.InOut,
+                                Loop = 0,
+                                Reverse = false,
+                                Delay = 0
+                            }
+                        )
+                        b7.MouseEnter:Connect(
+                            function()
+                                t:Animate(b7, {BackgroundColor3 = Color3.fromRGB(40, 40, 40)}, "Page Button Animation")
+                                t:Animate(bf, {TextColor3 = Color3.fromRGB(180, 180, 180)}, "Page Button Animation")
+                                t:Animate(a2, {ImageColor3 = Color3.fromRGB(180, 180, 180)}, "Page Button Animation")
+                            end
+                        )
+                        b7.MouseLeave:Connect(
+                            function()
+                                t:Animate(b7, {BackgroundColor3 = Color3.fromRGB(35, 35, 35)}, "Page Button Animation")
+                                t:Animate(bf, {TextColor3 = Color3.fromRGB(149, 149, 149)}, "Page Button Animation")
+                                t:Animate(a2, {ImageColor3 = Color3.fromRGB(149, 149, 149)}, "Page Button Animation")
+                            end
+                        )
+                        b7.MouseButton1Down:Connect(
+                            function()
+                                t:Animate(b7, {BackgroundColor3 = Color3.fromRGB(30, 30, 30)}, "Page Button Animation")
+                            end
+                        )
+                        b7.MouseButton1Up:Connect(
+                            function()
+                                t:Animate(b7, {BackgroundColor3 = Color3.fromRGB(35, 35, 35)}, "Page Button Animation")
+                                t:Animate(bf, {TextColor3 = Color3.fromRGB(149, 149, 149)}, "Page Button Animation")
+                                t:Animate(a2, {ImageColor3 = Color3.fromRGB(149, 149, 149)}, "Page Button Animation")
+                            end
+                        )
+                        b7.MouseButton1Click:Connect(
+                            function()
+                                wait(0.08)
+                                for K, w in next, a3:GetChildren() do
+                                    if w:IsA("Frame") then
+                                        w.Visible = false
+                                    end
+                                end
+                                b8.Visible = true
+                            end
+                        )
+                        bj.MouseEnter:Connect(
+                            function()
+                                t:Animate(bh, {ImageColor3 = config.Accent}, "Page Button Animation")
+                                t:Animate(bf, {TextColor3 = Color3.fromRGB(186, 186, 186)}, "Page Button Animation")
+                            end
+                        )
+                        bj.MouseLeave:Connect(
+                            function()
+                                t:Animate(bh, {ImageColor3 = Color3.fromRGB(149, 149, 149)}, "Page Button Animation")
+                                t:Animate(bf, {TextColor3 = Color3.fromRGB(168, 168, 168)}, "Page Button Animation")
+                            end
+                        )
+                        bj.MouseButton1Click:Connect(
+                            function()
+                                for K, w in next, a3:GetChildren() do
+                                    if w:IsA("Frame") then
+                                        w.Visible = false
+                                    end
+                                end
+                                for K, w in next, a3:GetChildren() do
+                                    if w.Name == "Home" then
+                                        w.Visible = true
+                                    end
+                                end
+                            end
+                        )
+                        local bk = {}
+                        function bk:CreateSector(bl)
+                            sector_cfg = {
+                                Text = bl.Text or "SECTION",
+                                Alignment = bl.Alignment or "left",
+                                Upper = bl.Upper or true,
+                                Callback = bl.Callback or function()
+                                    end
+                            }
+                            if sector_cfg.Upper then
+                                sector_cfg.Text = sector_cfg.Text:upper()
+                            end
+                            local bm = Instance.new("Frame")
+                            local bn = Instance.new("UIListLayout")
+                            local bo = Instance.new("TextLabel")
+                            local bp = Instance.new("UIPadding")
+                            local bq = Instance.new("UIPadding")
+                            local br = Instance.new("Frame")
+                            bm.Name = "Section"
+                            bm.Parent = aa
+                            bm.AutomaticSize = Enum.AutomaticSize.Y
+                            bm.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                            bm.BackgroundTransparency = 1.000
+                            bm.BorderSizePixel = 0
+                            bm.Size = UDim2.new(1, 0, 0, 0)
+                            bn.Parent = bm
+                            bn.HorizontalAlignment = Enum.HorizontalAlignment.Center
+                            bn.SortOrder = Enum.SortOrder.LayoutOrder
+                            bn.Padding = UDim.new(0, 5)
+                            bo.Name = "Title"
+                            bo.Parent = bm
+                            bo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                            bo.BackgroundTransparency = 1.000
+                            bo.LayoutOrder = -2
+                            bo.Size = UDim2.new(1, 0, 0, 7)
+                            bo.ZIndex = 5
+                            bo.Font = Enum.Font.Gotham
+                            bo.Text = sector_cfg.Text
+                            bo.TextColor3 = Color3.fromRGB(108, 108, 108)
+                            bo.TextSize = 12.000
+                            bo.TextXAlignment = Enum.TextXAlignment.Left
+                            bo.TextYAlignment = Enum.TextYAlignment.Top
+                            bp.Parent = bo
+                            bp.PaddingBottom = UDim.new(0, 10)
+                            bp.PaddingLeft = UDim.new(0, 15)
+                            if sector_cfg.Alignment == "left" then
+                                bo.TextXAlignment = Enum.TextXAlignment.Left
+                                bp.PaddingRight = UDim.new(0, 0)
+                                bp.PaddingLeft = UDim.new(0, 15)
+                            elseif sector_cfg.Alignment == "right" then
+                                bo.TextXAlignment = Enum.TextXAlignment.Right
+                                bp.PaddingRight = UDim.new(0, 15)
+                                bp.PaddingLeft = UDim.new(0, 0)
+                            elseif sector_cfg.Alignment == "center" then
+                                bo.TextXAlignment = Enum.TextXAlignment.Center
+                                bp.PaddingRight = UDim.new(0, 0)
+                                bp.PaddingLeft = UDim.new(0, 0)
+                            end
+                            bq.Parent = bm
+                            bq.PaddingTop = UDim.new(0, 3)
+                            br.Parent = bm
+                            br.AnchorPoint = Vector2.new(0, 1)
+                            br.BackgroundColor3 = Color3.fromRGB(49, 49, 49)
+                            br.BorderSizePixel = 0
+                            br.LayoutOrder = -1
+                            br.Position = UDim2.new(0.0503597111, 0, 0.144654095, 0)
+                            br.Size = UDim2.new(1, -25, 0, 1)
+                            local bs = {}
+                            function bs:CreateButton(bt)
+                                button_cfg = {
+                                    Text = bt.Text or "button",
+                                    Disabled = bt.Disabled or false,
+                                    Warning = bt.Warning or false,
+                                    Callback = bt.Callback or function()
+                                        end
+                                }
+                                local bu = Instance.new("TextButton")
+                                local bv = Instance.new("UICorner")
+                                local bw = Instance.new("TextLabel")
+                                local bx = Instance.new("UIPadding")
+                                bu.Name = "clickButton"
+                                bu.Parent = bm
+                                bu.AnchorPoint = Vector2.new(0.5, 0.5)
+                                bu.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+                                bu.Size = UDim2.new(1, -20, 0, 34)
+                                bu.AutoButtonColor = false
+                                bu.Font = Enum.Font.SourceSans
+                                bu.Text = ""
+                                bu.TextColor3 = Color3.fromRGB(0, 0, 0)
+                                bu.TextSize = 14.000
+                                bv.CornerRadius = UDim.new(0, 5)
+                                bv.Name = "buttonCorner"
+                                bv.Parent = bu
+                                bw.Name = "buttonText"
+                                bw.Parent = bu
+                                bw.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                                bw.BackgroundTransparency = 1.000
+                                bw.Size = UDim2.new(1, 0, 0, 34)
+                                bw.Font = Enum.Font.GothamMedium
+                                bw.Text = button_cfg.Text
+                                bw.TextColor3 = Color3.fromRGB(149, 149, 149)
+                                bw.TextSize = 13.000
+                                bw.TextXAlignment = Enum.TextXAlignment.Left
+                                bx.Name = "buttonTextPadding"
+                                bx.Parent = bw
+                                bx.PaddingLeft = UDim.new(0, 10)
+                                t:Create(
+                                    {
+                                        Name = "Button Animation",
+                                        Speed = 0.14,
+                                        Style = Enum.EasingStyle.Sine,
+                                        Direction = Enum.EasingDirection.InOut,
+                                        Loop = 0,
+                                        Reverse = false,
+                                        Delay = 0
+                                    }
+                                )
+                                if bt.Disabled == true then
+                                    bu.BackgroundTransparency = 0.2
+                                    if bt.Warning == true then
+                                        bw.TextColor3 = Color3.fromRGB(141, 54, 56)
+                                    else
+                                        bw.TextColor3 = Color3.fromRGB(100, 100, 100)
+                                    end
+                                else
+                                    bu.BackgroundTransparency = 0
+                                    if bt.Warning == true then
+                                        bw.TextColor3 = Color3.fromRGB(177, 73, 75)
+                                    else
+                                        bw.TextColor3 = Color3.fromRGB(149, 149, 149)
+                                    end
+                                end
+                                bu.MouseEnter:Connect(
+                                    function()
+                                        if bt.Disabled == false then
+                                            t:Animate(
+                                                bu,
+                                                {BackgroundColor3 = Color3.fromRGB(40, 40, 40)},
+                                                "Button Animation"
+                                            )
+                                            if bt.Warning == false then
+                                                t:Animate(
+                                                    bw,
+                                                    {TextColor3 = Color3.fromRGB(180, 180, 180)},
+                                                    "Button Animation"
+                                                )
+                                            else
+                                                t:Animate(
+                                                    bw,
+                                                    {TextColor3 = Color3.fromRGB(177, 73, 75)},
+                                                    "Button Animation"
+                                                )
+                                            end
+                                        end
+                                    end
+                                )
+                                bu.MouseLeave:Connect(
+                                    function()
+                                        if bt.Disabled == false then
+                                            t:Animate(
+                                                bu,
+                                                {BackgroundColor3 = Color3.fromRGB(35, 35, 35)},
+                                                "Button Animation"
+                                            )
+                                            if bt.Warning == false then
+                                                t:Animate(
+                                                    bw,
+                                                    {TextColor3 = Color3.fromRGB(149, 149, 149)},
+                                                    "Button Animation"
+                                                )
+                                            else
+                                                t:Animate(
+                                                    bw,
+                                                    {TextColor3 = Color3.fromRGB(177, 73, 75)},
+                                                    "Button Animation"
+                                                )
+                                            end
+                                        end
+                                    end
+                                )
+                                bu.MouseButton1Down:Connect(
+                                    function()
+                                        if bt.Disabled == false then
+                                            t:Animate(
+                                                bu,
+                                                {BackgroundColor3 = Color3.fromRGB(30, 30, 30)},
+                                                "Button Animation"
+                                            )
+                                        end
+                                    end
+                                )
+                                bu.MouseButton1Up:Connect(
+                                    function()
+                                        if bt.Disabled == false then
+                                            t:Animate(
+                                                bu,
+                                                {BackgroundColor3 = Color3.fromRGB(35, 35, 35)},
+                                                "Button Animation"
+                                            )
+                                            if bt.Warning == false then
+                                                t:Animate(
+                                                    bw,
+                                                    {TextColor3 = Color3.fromRGB(149, 149, 149)},
+                                                    "Button Animation"
+                                                )
+                                            else
+                                                t:Animate(
+                                                    bw,
+                                                    {TextColor3 = Color3.fromRGB(177, 73, 75)},
+                                                    "Button Animation"
+                                                )
+                                            end
+                                        end
+                                    end
+                                )
+                                bu.MouseButton1Click:Connect(
+                                    function()
+                                        if bt.Disabled == false then
+                                            bt.Callback()
+                                        end
+                                    end
+                                )
+                                local by = {}
+                                function by:ChangeText(bz, bool)
+                                    bz = bz or bt.Text
+                                    bt.Text = bz
+                                    if bool then
+                                        t:Animate(bw, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        bw.Text = bt.Text
+                                        wait()
+                                        t:Animate(bw, {TextTransparency = 0}, "Text Change Animation")
+                                    else
+                                        bw.Text = bt.Text
+                                    end
+                                    return by
+                                end
+                                function ChangeButtonText(bz, bool)
+                                    bz = bz or bt.Text
+                                    bt.Text = bz
+                                    if bool then
+                                        t:Animate(bw, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        bw.Text = bt.Text
+                                        wait()
+                                        t:Animate(bw, {TextTransparency = 0}, "Text Change Animation")
+                                    else
+                                        bw.Text = bt.Text
+                                    end
+                                end
+                                function by:ChangeCallback(bz)
+                                    bz = bz or bt.Callback
+                                    bt.Callback = bz
+                                    return by
+                                end
+                                function by:AddWarning()
+                                    bt.Warning = true
+                                    if bt.Disabled == true then
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(141, 54, 56)}, "Button Animation")
+                                    else
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(177, 73, 75)}, "Button Animation")
+                                    end
+                                    return by
+                                end
+                                function by:RemoveWarning()
+                                    bt.Warning = false
+                                    if bt.Disabled == true then
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(100, 100, 100)}, "Button Animation")
+                                    else
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(149, 149, 149)}, "Button Animation")
+                                    end
+                                    return by
+                                end
+                                function AddButtonWarning()
+                                    bt.Warning = true
+                                    if bt.Disabled == true then
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(141, 54, 56)}, "Button Animation")
+                                    else
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(177, 73, 75)}, "Button Animation")
+                                    end
+                                end
+                                function RemoveButtonWarning()
+                                    bt.Warning = false
+                                    if bt.Disabled == true then
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(100, 100, 100)}, "Button Animation")
+                                    else
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(149, 149, 149)}, "Button Animation")
+                                    end
+                                end
+                                function by:Disable()
+                                    bt.Disabled = true
+                                    t:Animate(bu, {BackgroundTransparency = 0.2}, "Button Animation")
+                                    if bt.Warning == true then
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(141, 54, 56)}, "Button Animation")
+                                    else
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(100, 100, 100)}, "Button Animation")
+                                    end
+                                    return by
+                                end
+                                function by:Enable()
+                                    bt.Disabled = false
+                                    t:Animate(bu, {BackgroundTransparency = 0}, "Button Animation")
+                                    if bt.Warning == true then
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(177, 73, 75)}, "Button Animation")
+                                    else
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(149, 149, 149)}, "Button Animation")
+                                    end
+                                    return by
+                                end
+                                function DisableButton()
+                                    bt.Disabled = true
+                                    t:Animate(bu, {BackgroundTransparency = 0.2}, "Button Animation")
+                                    if bt.Warning == true then
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(141, 54, 56)}, "Button Animation")
+                                    else
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(100, 100, 100)}, "Button Animation")
+                                    end
+                                end
+                                function EnableButton()
+                                    bt.Disabled = false
+                                    t:Animate(bu, {BackgroundTransparency = 0}, "Button Animation")
+                                    if bt.Warning == true then
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(177, 73, 75)}, "Button Animation")
+                                    else
+                                        t:Animate(bw, {TextColor3 = Color3.fromRGB(149, 149, 149)}, "Button Animation")
+                                    end
+                                end
+                                function by:Hide()
+                                    bu.Visible = false
+                                    return by
+                                end
+                                function HideButton()
+                                    bu.Visible = false
+                                end
+                                function by:Show()
+                                    bu.Visible = true
+                                    return by
+                                end
+                                function ShowButton()
+                                    bu.Visible = true
+                                end
+                                function by:Delete()
+                                    bu:Destroy()
+                                    return by
+                                end
+                                function DeleteButton()
+                                    bu:Destroy()
+                                end
+                                return by
+                            end
+                            function bs:CreateSwitch(bA)
+                                switch_cfg = {
+                                    Text = bA.Text or "switch",
+                                    State = bA.State or false,
+                                    Disabled = bA.Disabled or false,
+                                    Warning = bA.Warning or false,
+                                    Callback = bA.Callback or function()
+                                        end
+                                }
+                                local bB = Instance.new("Frame")
+                                local bC = Instance.new("UICorner")
+                                local bD = Instance.new("Frame")
+                                local bE = Instance.new("TextLabel")
+                                local bF = Instance.new("UIPadding")
+                                local bG = Instance.new("UIPadding")
+                                local bH = Instance.new("Frame")
+                                local bI = Instance.new("UICorner")
+                                local bJ = Instance.new("Frame")
+                                local bK = Instance.new("UICorner")
+                                local bL = Instance.new("Frame")
+                                local bM = Instance.new("UICorner")
+                                local aN = Instance.new("UIScale")
+                                local bN = Instance.new("TextButton")
+                                bB.Name = "switchBackground"
+                                bB.Parent = bm
+                                bB.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+                                bB.LayoutOrder = -1
+                                bB.Position = UDim2.new(0, -5, 0, 223)
+                                bB.Size = UDim2.new(1, -20, 0, 34)
+                                bB.ZIndex = 26
+                                bC.CornerRadius = UDim.new(0, 4)
+                                bC.Name = "switchCorner"
+                                bC.Parent = bB
+                                bD.Name = "switchText"
+                                bD.Parent = bB
+                                bD.BackgroundColor3 = Color3.fromRGB(36, 36, 36)
+                                bD.BackgroundTransparency = 1.000
+                                bD.Size = UDim2.new(1, 0, 1, 0)
+                                bD.ZIndex = 30
+                                bE.Name = "switchLabel"
+                                bE.Parent = bD
+                                bE.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                                bE.BackgroundTransparency = 1.000
+                                bE.Size = UDim2.new(0, 235, 1, 0)
+                                bE.ZIndex = 30
+                                bE.Font = Enum.Font.GothamMedium
+                                bE.Text = bA.Text
+                                bE.TextColor3 = Color3.fromRGB(149, 149, 149)
+                                bE.TextSize = 13.000
+                                bE.TextXAlignment = Enum.TextXAlignment.Left
+                                bF.Name = "switchLabelPadding"
+                                bF.Parent = bE
+                                bF.PaddingLeft = UDim.new(0, 10)
+                                bG.Name = "switchpadding"
+                                bG.Parent = bB
+                                bG.PaddingBottom = UDim.new(0, 1)
+                                bH.Name = "Switch"
+                                bH.Parent = bB
+                                bH.AnchorPoint = Vector2.new(0, 0.5)
+                                bH.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+                                bH.BorderSizePixel = 0
+                                bH.Position = UDim2.new(1, -35, 0.5, 0)
+                                bH.Size = UDim2.new(0, 21, 0, 8)
+                                bH.ZIndex = 40
+                                bI.CornerRadius = UDim.new(1, 0)
+                                bI.Name = "switchCorner2"
+                                bI.Parent = bH
+                                bJ.Name = "Circle"
+                                bJ.Parent = bH
+                                bJ.AnchorPoint = Vector2.new(1, 0.5)
+                                bJ.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+                                bJ.Position = UDim2.new(0, 10, 0.5, 0)
+                                bJ.Size = UDim2.new(0, 12, 0, 12)
+                                bJ.ZIndex = 45
+                                bK.CornerRadius = UDim.new(1, 0)
+                                bK.Name = "circleCorner"
+                                bK.Parent = bJ
+                                bL.Name = "Outer"
+                                bL.Parent = bJ
+                                bL.AnchorPoint = Vector2.new(0.5, 0.5)
+                                bL.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+                                bL.BackgroundTransparency = 0.6
+                                bL.Position = UDim2.new(0.5, 0, 0.5, 0)
+                                bL.Size = UDim2.new(0, 0, 0, 0)
+                                bL.ZIndex = 44
+                                bM.CornerRadius = UDim.new(1, 0)
+                                bM.Name = "outerCorner"
+                                bM.Parent = bL
+                                aN.Parent = bL
+                                aN.Scale = 1.6
+                                bN.Name = "Trigger"
+                                bN.Parent = bB
+                                bN.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                                bN.BackgroundTransparency = 1.000
+                                bN.Size = UDim2.new(1, 0, 1, 0)
+                                bN.ZIndex = 293810923
+                                bN.Font = Enum.Font.SourceSans
+                                bN.Text = ""
+                                bN.TextColor3 = Color3.fromRGB(0, 0, 0)
+                                bN.TextSize = 14.000
+                                t:Create(
+                                    {
+                                        Name = "Switch Animation",
+                                        Speed = 0.14,
+                                        Style = Enum.EasingStyle.Sine,
+                                        Direction = Enum.EasingDirection.InOut,
+                                        Loop = 0,
+                                        Reverse = false,
+                                        Delay = 0
+                                    }
+                                )
+                                if bA.State == true then
+                                    if bA.Disabled == false then
+                                        bJ.BackgroundColor3 = Color3.fromRGB(190, 190, 190)
+                                        bJ.Position = UDim2.new(0, 24, 0.5, 0)
+                                        if bA.Warning == true then
+                                            bH.BackgroundColor3 = Color3.fromRGB(177, 73, 75)
+                                            bH.BackgroundTransparency = 0
+                                        else
+                                            bH.BackgroundColor3 = config.Accent
+                                            bH.BackgroundTransparency = 0
+                                        end
+                                    else
+                                        bJ.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+                                        bJ.Position = UDim2.new(0, 10, 0.5, 0)
+                                        if bA.Warning == true then
+                                            bH.BackgroundColor3 = Color3.fromRGB(141, 54, 56)
+                                            bH.BackgroundTransparency = 0.2
+                                        else
+                                            bH.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+                                            bH.BackgroundTransparency = 0.2
+                                        end
+                                    end
+                                end
+                                if bA.Disabled == true then
+                                    bB.BackgroundTransparency = 0.2
+                                    if bA.Warning == true then
+                                        bE.TextColor3 = Color3.fromRGB(141, 54, 56)
+                                    else
+                                        bE.TextColor3 = Color3.fromRGB(100, 100, 100)
+                                    end
+                                else
+                                    bB.BackgroundTransparency = 0
+                                    if bA.Warning == true then
+                                        bE.TextColor3 = Color3.fromRGB(177, 73, 75)
+                                    else
+                                        bE.TextColor3 = Color3.fromRGB(149, 149, 149)
+                                    end
+                                end
+                                bN.MouseEnter:Connect(
+                                    function()
+                                        if bA.Disabled == false then
+                                            t:Animate(
+                                                bB,
+                                                {BackgroundColor3 = Color3.fromRGB(40, 40, 40)},
+                                                "Switch Animation"
+                                            )
+                                            t:Animate(bL, {Size = UDim2.new(0, 12, 0, 12)}, "Switch Animation")
+                                            if bA.Warning == false then
+                                                t:Animate(
+                                                    bE,
+                                                    {TextColor3 = Color3.fromRGB(180, 180, 180)},
+                                                    "Switch Animation"
+                                                )
+                                            else
+                                                t:Animate(
+                                                    bE,
+                                                    {TextColor3 = Color3.fromRGB(177, 73, 75)},
+                                                    "Switch Animation"
+                                                )
+                                            end
+                                        end
+                                    end
+                                )
+                                bN.MouseLeave:Connect(
+                                    function()
+                                        if bA.Disabled == false then
+                                            t:Animate(
+                                                bB,
+                                                {BackgroundColor3 = Color3.fromRGB(35, 35, 35)},
+                                                "Switch Animation"
+                                            )
+                                            t:Animate(bL, {Size = UDim2.new(0, 0, 0, 0)}, "Switch Animation")
+                                            if bA.Warning == false then
+                                                t:Animate(
+                                                    bE,
+                                                    {TextColor3 = Color3.fromRGB(149, 149, 149)},
+                                                    "Switch Animation"
+                                                )
+                                            else
+                                                t:Animate(
+                                                    bE,
+                                                    {TextColor3 = Color3.fromRGB(177, 73, 75)},
+                                                    "Switch Animation"
+                                                )
+                                            end
+                                        end
+                                    end
+                                )
+                                bN.MouseButton1Down:Connect(
+                                    function()
+                                        if bA.Disabled == false then
+                                            t:Animate(
+                                                bB,
+                                                {BackgroundColor3 = Color3.fromRGB(30, 30, 30)},
+                                                "Switch Animation"
+                                            )
+                                        end
+                                    end
+                                )
+                                bN.MouseButton1Up:Connect(
+                                    function()
+                                        if bA.Disabled == false then
+                                            t:Animate(
+                                                bB,
+                                                {BackgroundColor3 = Color3.fromRGB(35, 35, 35)},
+                                                "Switch Animation"
+                                            )
+                                            if bA.Warning == false then
+                                                t:Animate(
+                                                    bE,
+                                                    {TextColor3 = Color3.fromRGB(149, 149, 149)},
+                                                    "Switch Animation"
+                                                )
+                                            else
+                                                t:Animate(
+                                                    bE,
+                                                    {TextColor3 = Color3.fromRGB(177, 73, 75)},
+                                                    "Switch Animation"
+                                                )
+                                            end
+                                        end
+                                    end
+                                )
+                                bN.MouseButton1Click:Connect(
+                                    function()
+                                        if bA.Disabled == false then
+                                            bA.State = not bA.State
+                                            local bO = bA.State and config.Accent or Color3.fromRGB(50, 50, 50)
+                                            if bA.Warning == true then
+                                                bO =
+                                                    bA.State and Color3.fromRGB(177, 73, 75) or
+                                                    Color3.fromRGB(50, 50, 50)
+                                            end
+                                            local bP = bA.State and UDim2.new(0, 24, 0.5, 0) or UDim2.new(0, 10, 0.5, 0)
+                                            local bQ =
+                                                bA.State and Color3.fromRGB(170, 170, 170) or Color3.fromRGB(60, 60, 60)
+                                            t:Animate(bH, {BackgroundColor3 = bO}, "Switch Animation")
+                                            t:Animate(bJ, {Position = bP, BackgroundColor3 = bQ}, "Switch Animation")
+                                            bA.Callback(bA.State)
+                                        end
+                                    end
+                                )
+                                local bR = {}
+                                function bR:ChangeText(bz, bool)
+                                    bz = bz or bA.Text
+                                    bA.Text = bz
+                                    if bool then
+                                        t:Animate(bE, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        bE.Text = bA.Text
+                                        wait()
+                                        t:Animate(bE, {TextTransparency = 0}, "Text Change Animation")
+                                    else
+                                        bE.Text = bA.Text
+                                    end
+                                    return bR
+                                end
+                                function ChangeSwitchText(bz, bool)
+                                    bz = bz or bA.Text
+                                    bA.Text = bz
+                                    if bool then
+                                        t:Animate(bE, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        bE.Text = bA.Text
+                                        wait()
+                                        t:Animate(bE, {TextTransparency = 0}, "Text Change Animation")
+                                    else
+                                        bE.Text = bA.Text
+                                    end
+                                end
+                                function bR:ChangeCallback(bz)
+                                    bz = bz or bA.Callback
+                                    bA.Callback = bz
+                                    return bR
+                                end
+                                function bR:AddWarning()
+                                    bA.Warning = true
+                                    if bA.Disabled == true then
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(141, 54, 56)}, "Switch Animation")
+                                    else
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(177, 73, 75)}, "Switch Animation")
+                                    end
+                                    return bR
+                                end
+                                function bR:RemoveWarning()
+                                    bA.Warning = false
+                                    if bA.Disabled == true then
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(100, 100, 100)}, "Switch Animation")
+                                    else
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(149, 149, 149)}, "Switch Animation")
+                                    end
+                                    return bR
+                                end
+                                function AddSwitchWarning()
+                                    bA.Warning = true
+                                    if bA.Disabled == true then
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(141, 54, 56)}, "Switch Animation")
+                                    else
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(177, 73, 75)}, "Switch Animation")
+                                    end
+                                end
+                                function RemoveSwitchWarning()
+                                    bA.Warning = false
+                                    if bA.Disabled == true then
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(100, 100, 100)}, "Switch Animation")
+                                    else
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(149, 149, 149)}, "Switch Animation")
+                                    end
+                                end
+                                function bR:Disable()
+                                    bA.Disabled = true
+                                    t:Animate(bB, {BackgroundTransparency = 0.2}, "Switch Animation")
+                                    if bA.Warning == true then
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(141, 54, 56)}, "Switch Animation")
+                                    else
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(100, 100, 100)}, "Switch Animation")
+                                    end
+                                    return bR
+                                end
+                                function bR:Enable()
+                                    bA.Disabled = false
+                                    t:Animate(bB, {BackgroundTransparency = 0}, "Button Animation")
+                                    if bA.Warning == true then
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(177, 73, 75)}, "Switch Animation")
+                                    else
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(149, 149, 149)}, "Switch Animation")
+                                    end
+                                    return bR
+                                end
+                                function DisableSwitch()
+                                    bA.Disabled = true
+                                    t:Animate(bB, {BackgroundTransparency = 0.2}, "Button Animation")
+                                    if bA.Warning == true then
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(141, 54, 56)}, "Switch Animation")
+                                    else
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(100, 100, 100)}, "Switch Animation")
+                                    end
+                                end
+                                function EnableSwitch()
+                                    bA.Disabled = false
+                                    t:Animate(bB, {BackgroundTransparency = 0}, "Switch Animation")
+                                    if bA.Warning == true then
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(177, 73, 75)}, "Switch Animation")
+                                    else
+                                        t:Animate(bE, {TextColor3 = Color3.fromRGB(149, 149, 149)}, "Switch Animation")
+                                    end
+                                end
+                                function bR:Hide()
+                                    bB.Visible = false
+                                    return bR
+                                end
+                                function HideSwitch()
+                                    bB.Visible = false
+                                end
+                                function bR:Show()
+                                    bB.Visible = true
+                                    return bR
+                                end
+                                function ShowSwitch()
+                                    bB.Visible = true
+                                end
+                                function bR:Delete()
+                                    bB:Destroy()
+                                    return bR
+                                end
+                                function DeleteSwitch()
+                                    bB:Destroy()
+                                end
+                                return bR
+                            end
+                            function bs:CreateTextbox(bS)
+                                textbox_cfg = {
+                                    Text = bS.Text or "textbox",
+                                    Inputs = {
+                                        Placeholder = bS.Inputs.Placeholder or "Placeholder",
+                                        Default = bS.Inputs.Default or ""
+                                    },
+                                    Auto = bS.Auto or true,
+                                    Format = bS.Format or "all",
+                                    Disabled = bS.Disabled or false,
+                                    Warning = bS.Warning or false,
+                                    Callback = bS.Callback or function()
+                                        end
+                                }
+                                local bT = Instance.new("Frame")
+                                local bU = Instance.new("UICorner")
+                                local bV = Instance.new("TextLabel")
+                                local bW = Instance.new("UIPadding")
+                                local bX = Instance.new("TextBox")
+                                local bY = Instance.new("UIPadding")
+                                bT.Name = "Textbox"
+                                bT.Parent = bm
+                                bT.AnchorPoint = Vector2.new(0.5, 0.5)
+                                bT.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+                                bT.BorderSizePixel = 0
+                                bT.Position = UDim2.new(0, 144, 0, 0)
+                                bT.Size = UDim2.new(1, -20, 0, 34)
+                                bU.CornerRadius = UDim.new(0, 5)
+                                bU.Name = "textboxCorner"
+                                bU.Parent = bT
+                                bV.Name = "boxText"
+                                bV.Parent = bT
+                                bV.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                                bV.BackgroundTransparency = 1.000
+                                bV.Size = UDim2.new(1, 0, 0, 34)
+                                bV.Font = Enum.Font.GothamMedium
+                                bV.Text = bS.Text
+                                bV.TextColor3 = Color3.fromRGB(149, 149, 149)
+                                bV.TextSize = 13.000
+                                bV.TextXAlignment = Enum.TextXAlignment.Left
+                                bW.Name = "boxTextPadding"
+                                bW.Parent = bV
+                                bW.PaddingLeft = UDim.new(0, 10)
+                                bX.Name = "box"
+                                bX.Parent = bT
+                                bX.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                                bX.BackgroundTransparency = 1.000
+                                bX.Size = UDim2.new(1, 0, 1, 0)
+                                bX.Font = Enum.Font.Gotham
+                                bX.PlaceholderColor3 = Color3.fromRGB(107, 107, 107)
+                                bX.PlaceholderText = bS.Inputs.Placeholder
+                                bX.Text = bS.Inputs.Default
+                                bX.TextColor3 = Color3.fromRGB(171, 171, 171)
+                                bX.ClipsDescendants = true
+                                bX.TextSize = 13.000
+                                bX.TextXAlignment = Enum.TextXAlignment.Right
+                                bY.Name = "boxPadding"
+                                bY.Parent = bX
+                                bY.PaddingRight = UDim.new(0, 10)
+                                t:Create(
+                                    {
+                                        Name = "Box Animation",
+                                        Speed = 0.14,
+                                        Style = Enum.EasingStyle.Sine,
+                                        Direction = Enum.EasingDirection.InOut,
+                                        Loop = 0,
+                                        Reverse = false,
+                                        Delay = 0
+                                    }
+                                )
+                                bX:GetPropertyChangedSignal("Text"):Connect(
+                                    function()
+                                        if bS.Format == "numbers" then
+                                            bX.Text = bX.Text:gsub("%D+", "")
+                                        end
+                                    end
+                                )
+                                bX:GetPropertyChangedSignal("Text"):Connect(
+                                    function()
+                                        if bS.Format == "lower" then
+                                            bX.Text = bX.Text:lower()
+                                        end
+                                    end
+                                )
+                                bX:GetPropertyChangedSignal("Text"):Connect(
+                                    function()
+                                        if bS.Format == "upper" then
+                                            bX.Text = bX.Text:upper()
+                                        end
+                                    end
+                                )
+                                bX:GetPropertyChangedSignal("Text"):Connect(
+                                    function()
+                                        if bS.Format == "all" or bS.Format == "" then
+                                            bX.Text = bX.Text
+                                        end
+                                    end
+                                )
+                                if bS.Disabled == true then
+                                    bX.Visible = false
+                                    bT.BackgroundTransparency = 0.2
+                                    if bS.Warning == true then
+                                        bV.TextColor3 = Color3.fromRGB(141, 54, 56)
+                                    else
+                                        bV.TextColor3 = Color3.fromRGB(100, 100, 100)
+                                        bX.TextColor3 = Color3.fromRGB(100, 100, 100)
+                                    end
+                                else
+                                    bX.Visible = true
+                                    bT.BackgroundTransparency = 0
+                                    if bS.Warning == true then
+                                        bV.TextColor3 = Color3.fromRGB(177, 73, 75)
+                                    else
+                                        bV.TextColor3 = Color3.fromRGB(149, 149, 149)
+                                        bX.TextColor3 = Color3.fromRGB(171, 171, 171)
+                                    end
+                                end
+                                bT.MouseEnter:Connect(
+                                    function()
+                                        if bS.Disabled == false then
+                                            t:Animate(
+                                                bT,
+                                                {BackgroundColor3 = Color3.fromRGB(40, 40, 40)},
+                                                "Box Animation"
+                                            )
+                                            if bS.Warning == false then
+                                                t:Animate(
+                                                    bV,
+                                                    {TextColor3 = Color3.fromRGB(180, 180, 180)},
+                                                    "Box Animation"
+                                                )
+                                            else
+                                                t:Animate(
+                                                    bV,
+                                                    {TextColor3 = Color3.fromRGB(177, 73, 75)},
+                                                    "Box Animation"
+                                                )
+                                            end
+                                        end
+                                    end
+                                )
+                                bT.MouseLeave:Connect(
+                                    function()
+                                        if bS.Disabled == false then
+                                            t:Animate(
+                                                bT,
+                                                {BackgroundColor3 = Color3.fromRGB(35, 35, 35)},
+                                                "Box Animation"
+                                            )
+                                            if bS.Warning == false then
+                                                t:Animate(
+                                                    bV,
+                                                    {TextColor3 = Color3.fromRGB(149, 149, 149)},
+                                                    "Box Animation"
+                                                )
+                                            else
+                                                t:Animate(
+                                                    bV,
+                                                    {TextColor3 = Color3.fromRGB(177, 73, 75)},
+                                                    "Box Animation"
+                                                )
+                                            end
+                                        end
+                                    end
+                                )
+                                bX.Focused:Connect(
+                                    function()
+                                        aT = false
+                                    end
+                                )
+                                bX.FocusLost:Connect(
+                                    function(bZ)
+                                        aT = true
+                                        if not bS.Auto then
+                                            if bZ then
+                                                bS.Callback(bX.Text)
+                                            end
+                                        else
+                                            bS.Callback(bX.Text)
+                                        end
+                                    end
+                                )
+                                local b_ = {}
+                                function b_:ChangeText(bz, bool)
+                                    bz = bz or bS.Text
+                                    bS.Text = bz
+                                    if bool then
+                                        t:Animate(TextBox, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        TextBox.Text = bS.Text
+                                        wait()
+                                        t:Animate(TextBox, {TextTransparency = 0}, "Text Change Animation")
+                                    else
+                                        TextBox.Text = bS.Text
+                                    end
+                                    return b_
+                                end
+                                function ChangeBoxText(bz, bool)
+                                    bz = bz or bS.Text
+                                    bS.Text = bz
+                                    if bool then
+                                        t:Animate(TextBox, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        TextBox.Text = bS.Text
+                                        wait()
+                                        t:Animate(TextBox, {TextTransparency = 0}, "Text Change Animation")
+                                    else
+                                        TextBox.Text = bS.Text
+                                    end
+                                end
+                                function b_:ChangeInput(bz, bool)
+                                    bz = bz or bS.Inputs.Default
+                                    bS.Inputs.Default = bz
+                                    if bool then
+                                        t:Animate(bX, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        bX.Text = bS.Inputs.Default
+                                        wait()
+                                        t:Animate(bX, {TextTransparency = 0}, "Text Change Animation")
+                                    else
+                                        bX.Text = bS.Inputs.Default
+                                    end
+                                    return b_
+                                end
+                                function ChangeBoxInput(bz, bool)
+                                    bz = bz or bS.Inputs.Default
+                                    bS.Inputs.Default = bz
+                                    if bool then
+                                        t:Animate(bX, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        bX.Text = bS.Inputs.Default
+                                        wait()
+                                        t:Animate(bX, {TextTransparency = 0}, "Text Change Animation")
+                                    else
+                                        bX.Text = bS.Inputs.Default
+                                    end
+                                end
+                                function b_:ChangeCallback(bz)
+                                    bz = bz or bS.Callback
+                                    bS.Callback = bz
+                                    return b_
+                                end
+                                function b_:AddWarning()
+                                    bS.Warning = true
+                                    if bS.Disabled == true then
+                                        t:Animate(bV, {TextColor3 = Color3.fromRGB(141, 54, 56)}, "Box Animation")
+                                    else
+                                        t:Animate(bV, {TextColor3 = Color3.fromRGB(177, 73, 75)}, "Box Animation")
+                                    end
+                                    return b_
+                                end
+                                function b_:RemoveWarning()
+                                    bS.Warning = false
+                                    if bS.Disabled == true then
+                                        t:Animate(bV, {TextColor3 = Color3.fromRGB(100, 100, 100)}, "Box Animation")
+                                    else
+                                        t:Animate(bV, {TextColor3 = Color3.fromRGB(149, 149, 149)}, "Box Animation")
+                                    end
+                                    return b_
+                                end
+                                function AddBoxWarning()
+                                    bS.Warning = true
+                                    if bS.Disabled == true then
+                                        t:Animate(bV, {TextColor3 = Color3.fromRGB(141, 54, 56)}, "Box Animation")
+                                    else
+                                        t:Animate(bV, {TextColor3 = Color3.fromRGB(177, 73, 75)}, "Box Animation")
+                                    end
+                                end
+                                function RemoveBoxWarning()
+                                    bS.Warning = false
+                                    if bS.Disabled == true then
+                                        t:Animate(bV, {TextColor3 = Color3.fromRGB(100, 100, 100)}, "Box Animation")
+                                    else
+                                        t:Animate(bV, {TextColor3 = Color3.fromRGB(149, 149, 149)}, "Box Animation")
+                                    end
+                                end
+                                function b_:Disable()
+                                    bS.Disabled = true
+                                    t:Animate(TextBox, {BackgroundTransparency = 0.2}, "Box Animation")
+                                    if bS.Warning == true then
+                                        t:Animate(TextBox, {TextColor3 = Color3.fromRGB(141, 54, 56)}, "Box Animation")
+                                    else
+                                        t:Animate(
+                                            TextBox,
+                                            {TextColor3 = Color3.fromRGB(100, 100, 100)},
+                                            "Box Animation"
+                                        )
+                                    end
+                                    return b_
+                                end
+                                function b_:Enable()
+                                    bS.Disabled = false
+                                    t:Animate(TextBox, {BackgroundTransparency = 0}, "Box Animation")
+                                    if bS.Warning == true then
+                                        t:Animate(TextBox, {TextColor3 = Color3.fromRGB(177, 73, 75)}, "Box Animation")
+                                    else
+                                        t:Animate(
+                                            TextBox,
+                                            {TextColor3 = Color3.fromRGB(149, 149, 149)},
+                                            "Box Animation"
+                                        )
+                                    end
+                                    return b_
+                                end
+                                function DisableBox()
+                                    bS.Disabled = true
+                                    t:Animate(TextBox, {BackgroundTransparency = 0.2}, "Box Animation")
+                                    if bS.Warning == true then
+                                        t:Animate(TextBox, {TextColor3 = Color3.fromRGB(141, 54, 56)}, "Box Animation")
+                                    else
+                                        t:Animate(
+                                            TextBox,
+                                            {TextColor3 = Color3.fromRGB(100, 100, 100)},
+                                            "Box Animation"
+                                        )
+                                    end
+                                end
+                                function EnableBox()
+                                    bS.Disabled = false
+                                    t:Animate(TextBox, {BackgroundTransparency = 0}, "Box Animation")
+                                    if bS.Warning == true then
+                                        t:Animate(TextBox, {TextColor3 = Color3.fromRGB(177, 73, 75)}, "Box Animation")
+                                    else
+                                        t:Animate(
+                                            TextBox,
+                                            {TextColor3 = Color3.fromRGB(149, 149, 149)},
+                                            "Box Animation"
+                                        )
+                                    end
+                                end
+                                function b_:Hide()
+                                    TextBox.Visible = false
+                                    return b_
+                                end
+                                function HideBox()
+                                    TextBox.Visible = false
+                                end
+                                function b_:Show()
+                                    TextBox.Visible = true
+                                    return b_
+                                end
+                                function ShowBox()
+                                    TextBox.Visible = true
+                                end
+                                function b_:Delete()
+                                    TextBox:Destroy()
+                                    return b_
+                                end
+                                function DeleteBox()
+                                    TextBox:Destroy()
+                                end
+                                return b_
+                            end
+                            function bs:ChangeHeader(bz, bool)
+                                bz = bz or bl.Text
+                                bl.Text = bz
+                                if bool then
+                                    t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                    wait(0.12)
+                                    b1.Text = bl.Text
+                                    wait()
+                                    t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                                else
+                                    b1.Text = bl.Text
+                                end
+                                return bs
+                            end
+                            function ChangeSectorHeader(bz, bool)
+                                bz = bz or bl.Text
+                                bl.Text = bz
+                                if bool then
+                                    t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                    wait(0.12)
+                                    b1.Text = bl.Text
+                                    wait()
+                                    t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                                else
+                                    b1.Text = bl.Text
+                                end
+                            end
+                            function bs:ChangeAlignment(bz, bool)
+                                bool = bool or true
+                                bz = bz or "left"
+                                bl.Alignment = bz
+                                if bool then
+                                    if bz == "left" then
+                                        t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        b1.TextXAlignment = Enum.TextXAlignment.Left
+                                        b2.PaddingRight = UDim.new(0, 0)
+                                        b2.PaddingLeft = UDim.new(0, 15)
+                                        wait()
+                                        t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                                    elseif bz == "right" then
+                                        t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        b1.TextXAlignment = Enum.TextXAlignment.Right
+                                        b2.PaddingRight = UDim.new(0, 15)
+                                        b2.PaddingLeft = UDim.new(0, 0)
+                                        wait()
+                                        t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                                    elseif bz == "center" then
+                                        t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        b1.TextXAlignment = Enum.TextXAlignment.Center
+                                        b2.PaddingRight = UDim.new(0, 0)
+                                        b2.PaddingLeft = UDim.new(0, 0)
+                                        wait()
+                                        t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                                    end
+                                else
+                                    if bz == "left" then
+                                        b1.TextXAlignment = Enum.TextXAlignment.Left
+                                        b2.PaddingRight = UDim.new(0, 0)
+                                        b2.PaddingLeft = UDim.new(0, 15)
+                                    elseif bz == "right" then
+                                        b1.TextXAlignment = Enum.TextXAlignment.Right
+                                        b2.PaddingRight = UDim.new(0, 15)
+                                        b2.PaddingLeft = UDim.new(0, 0)
+                                    elseif bz == "center" then
+                                        b1.TextXAlignment = Enum.TextXAlignment.Center
+                                        b2.PaddingRight = UDim.new(0, 0)
+                                        b2.PaddingLeft = UDim.new(0, 0)
+                                    end
+                                end
+                                return bs
+                            end
+                            function ChangeSectorAlignment(bz, bool)
+                                bool = bool or true
+                                bz = bz or "left"
+                                bl.Alignment = bz
+                                if bool then
+                                    if bz == "left" then
+                                        t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        b1.TextXAlignment = Enum.TextXAlignment.Left
+                                        b2.PaddingRight = UDim.new(0, 0)
+                                        b2.PaddingLeft = UDim.new(0, 15)
+                                        wait()
+                                        t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                                    elseif bz == "right" then
+                                        t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        b1.TextXAlignment = Enum.TextXAlignment.Right
+                                        b2.PaddingRight = UDim.new(0, 15)
+                                        b2.PaddingLeft = UDim.new(0, 0)
+                                        wait()
+                                        t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                                    elseif bz == "center" then
+                                        t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                        wait(0.12)
+                                        b1.TextXAlignment = Enum.TextXAlignment.Center
+                                        b2.PaddingRight = UDim.new(0, 0)
+                                        b2.PaddingLeft = UDim.new(0, 0)
+                                        wait()
+                                        t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                                    end
+                                else
+                                    if bz == "left" then
+                                        b1.TextXAlignment = Enum.TextXAlignment.Left
+                                        b2.PaddingRight = UDim.new(0, 0)
+                                        b2.PaddingLeft = UDim.new(0, 15)
+                                    elseif bz == "right" then
+                                        b1.TextXAlignment = Enum.TextXAlignment.Right
+                                        b2.PaddingRight = UDim.new(0, 15)
+                                        b2.PaddingLeft = UDim.new(0, 0)
+                                    elseif bz == "center" then
+                                        b1.TextXAlignment = Enum.TextXAlignment.Center
+                                        b2.PaddingRight = UDim.new(0, 0)
+                                        b2.PaddingLeft = UDim.new(0, 0)
+                                    end
+                                end
+                            end
+                            function bs:ChangeCallback(bz)
+                                bz = bz or function()
+                                    end
+                                bl.Callback = bz
+                                return bs
+                            end
+                            function bs:Hide()
+                                bm.Visible = false
+                                return bs
+                            end
+                            function HideSector()
+                                bm.Visible = false
+                            end
+                            function bs:Show()
+                                bm.Visible = true
+                                return bs
+                            end
+                            function ShowSector()
+                                bm.Visible = true
+                            end
+                            function bs:Delete()
+                                bm:Destroy()
+                                return bs
+                            end
+                            function DeleteSection()
+                                bm:Destroy()
+                            end
+                            bl.Callback()
+                            return bs
+                        end
+                        function bk:ChangeIcon(bz, bool)
+                            bz = bz or b5.IconConfig.Icon
+                            bz = b6[bz]
+                            if bool then
+                                t:Animate(a2, {ImageTransparency = 1}, "Text Change Animation")
+                                wait(0.12)
+                                a2.Image = bz
+                                wait()
+                                t:Animate(a2, {ImageTransparency = 0}, "Text Change Animation")
+                            else
+                                a2.Image = bz
+                            end
+                            return bk
+                        end
+                        function ChangeIcon(bz, bool)
+                            bz = bz or b5.IconConfig.Icon
+                            bz = b6[bz]
+                            if bool then
+                                t:Animate(a2, {ImageTransparency = 1}, "Text Change Animation")
+                                wait(0.12)
+                                a2.Image = bz
+                                wait()
+                                t:Animate(a2, {ImageTransparency = 0}, "Text Change Animation")
+                            else
+                                a2.Image = bz
+                            end
+                        end
+                        function bk:ChangeHeader(bz, bool)
+                            bz = bz or b5.Text
+                            b5.Text = bz
+                            if bool then
+                                t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                wait(0.12)
+                                b1.Text = b5.Text
+                                wait()
+                                t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                            else
+                                b1.Text = b5.Text
+                            end
+                            return b4
+                        end
+                        function ChangePageHeader(bz, bool)
+                            bz = bz or b5.Text
+                            b5.Text = bz
+                            if bool then
+                                t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                wait(0.12)
+                                b1.Text = b5.Text
+                                wait()
+                                t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                            else
+                                b1.Text = b5.Text
+                            end
+                        end
+                        function bk:Hide()
+                            b7.Visible = false
+                            return bk
+                        end
+                        function HidePage()
+                            b7.Visible = false
+                        end
+                        function bk:Show()
+                            b7.Visible = true
+                            return bk
+                        end
+                        function ShowPage()
+                            b7.Visible = true
+                        end
+                        function bk:Delete()
+                            b7:Destroy()
+                            b8:Destroy()
+                            return bk
+                        end
+                        function DeletePage()
+                            b7:Destroy()
+                            b8:Destroy()
+                        end
+                        b5.Callback()
+                        return bk
+                    end
+                    function b4:ChangeHeader(bz, bool)
+                        bz = bz or aZ.Text
+                        aZ.Text = bz
+                        if bool then
+                            t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                            wait(0.12)
+                            b1.Text = aZ.Text
+                            wait()
+                            t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                        else
+                            b1.Text = aZ.Text
+                        end
+                        return b4
+                    end
+                    function ChangeSectionHeader(bz, bool)
+                        bz = bz or aZ.Text
+                        aZ.Text = bz
+                        if bool then
+                            t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                            wait(0.12)
+                            b1.Text = aZ.Text
+                            wait()
+                            t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                        else
+                            b1.Text = aZ.Text
+                        end
+                    end
+                    function b4:ChangeAlignment(bz, bool)
+                        bool = bool or true
+                        bz = bz or "left"
+                        aZ.Alignment = bz
+                        if bool then
+                            if bz == "left" then
+                                t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                wait(0.12)
+                                b1.TextXAlignment = Enum.TextXAlignment.Left
+                                b2.PaddingRight = UDim.new(0, 0)
+                                b2.PaddingLeft = UDim.new(0, 15)
+                                wait()
+                                t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                            elseif bz == "right" then
+                                t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                wait(0.12)
+                                b1.TextXAlignment = Enum.TextXAlignment.Right
+                                b2.PaddingRight = UDim.new(0, 15)
+                                b2.PaddingLeft = UDim.new(0, 0)
+                                wait()
+                                t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                            elseif bz == "center" then
+                                t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                wait(0.12)
+                                b1.TextXAlignment = Enum.TextXAlignment.Center
+                                b2.PaddingRight = UDim.new(0, 0)
+                                b2.PaddingLeft = UDim.new(0, 0)
+                                wait()
+                                t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                            end
+                        else
+                            if bz == "left" then
+                                b1.TextXAlignment = Enum.TextXAlignment.Left
+                                b2.PaddingRight = UDim.new(0, 0)
+                                b2.PaddingLeft = UDim.new(0, 15)
+                            elseif bz == "right" then
+                                b1.TextXAlignment = Enum.TextXAlignment.Right
+                                b2.PaddingRight = UDim.new(0, 15)
+                                b2.PaddingLeft = UDim.new(0, 0)
+                            elseif bz == "center" then
+                                b1.TextXAlignment = Enum.TextXAlignment.Center
+                                b2.PaddingRight = UDim.new(0, 0)
+                                b2.PaddingLeft = UDim.new(0, 0)
+                            end
+                        end
+                        return b4
+                    end
+                    function ChangeAlignment(bz, bool)
+                        bool = bool or true
+                        bz = bz or "left"
+                        aZ.Alignment = bz
+                        if bool then
+                            if bz == "left" then
+                                t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                wait(0.12)
+                                b1.TextXAlignment = Enum.TextXAlignment.Left
+                                b2.PaddingRight = UDim.new(0, 0)
+                                b2.PaddingLeft = UDim.new(0, 15)
+                                wait()
+                                t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                            elseif bz == "right" then
+                                t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                wait(0.12)
+                                b1.TextXAlignment = Enum.TextXAlignment.Right
+                                b2.PaddingRight = UDim.new(0, 15)
+                                b2.PaddingLeft = UDim.new(0, 0)
+                                wait()
+                                t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                            elseif bz == "center" then
+                                t:Animate(b1, {TextTransparency = 1}, "Text Change Animation")
+                                wait(0.12)
+                                b1.TextXAlignment = Enum.TextXAlignment.Center
+                                b2.PaddingRight = UDim.new(0, 0)
+                                b2.PaddingLeft = UDim.new(0, 0)
+                                wait()
+                                t:Animate(b1, {TextTransparency = 0}, "Text Change Animation")
+                            end
+                        else
+                            if bz == "left" then
+                                b1.TextXAlignment = Enum.TextXAlignment.Left
+                                b2.PaddingRight = UDim.new(0, 0)
+                                b2.PaddingLeft = UDim.new(0, 15)
+                            elseif bz == "right" then
+                                b1.TextXAlignment = Enum.TextXAlignment.Right
+                                b2.PaddingRight = UDim.new(0, 15)
+                                b2.PaddingLeft = UDim.new(0, 0)
+                            elseif bz == "center" then
+                                b1.TextXAlignment = Enum.TextXAlignment.Center
+                                b2.PaddingRight = UDim.new(0, 0)
+                                b2.PaddingLeft = UDim.new(0, 0)
+                            end
+                        end
+                    end
+                    function b4:ChangeCallback(bz)
+                        bz = bz or function()
+                            end
+                        aZ.Callback = bz
+                        return b4
+                    end
+                    function b4:Hide()
+                        a_.Visible = false
+                        return b4
+                    end
+                    function HideSection()
+                        a_.Visible = false
+                    end
+                    function b4:Show()
+                        a_.Visible = true
+                        return b4
+                    end
+                    function ShowSection()
+                        a_.Visible = true
+                    end
+                    function b4:Delete()
+                        a_:Destroy()
+                        return b4
+                    end
+                    function DeleteSection()
+                        a_:Destroy()
+                    end
+                    aZ.Callback()
+                    return b4
+                end
+                function aY:ChangeHeader(bz, bool)
+                    bool = bool or true
+                    bz = bz or u.Header
+                    u.Header = bz
+                    if bool then
+                        t:Animate(aQ, {TextTransparency = 1}, "Text Change Animation")
+                        wait(0.12)
+                        aQ.Text = u.Header
+                        wait()
+                        t:Animate(aQ, {TextTransparency = 0}, "Text Change Animation")
+                    else
+                        aQ.Text = u.Header
+                    end
+                    return aY
+                end
+                function ChangeHeader(bz)
+                    bool = bool or true
+                    bz = bz or u.Header
+                    u.Header = bz
+                    if bool then
+                        t:Animate(aQ, {TextTransparency = 1}, "Text Change Animation")
+                        wait(0.12)
+                        aQ.Text = u.Header
+                        wait()
+                        t:Animate(aQ, {TextTransparency = 0}, "Text Change Animation")
+                    else
+                        aQ.Text = u.Header
+                    end
+                end
+                function aY:ChangeSize(c0, c1)
+                    c0 = c0 or Y.Sizes.X
+                    c1 = c1 or Y.Sizes.Y
+                    t:Animate(_, {Size = UDim2.new(0, c0, 0, c1)}, "Size Change Animation")
+                    return aY
+                end
+                function ChangeSize(c0, c1)
+                    c0 = c0 or Y.Sizes.X
+                    c1 = c1 or Y.Sizes.Y
+                    Y.Sizes.X = c0
+                    Y.Sizes.Y = c1
+                    t:Animate(_, {Size = UDim2.new(0, c0, 0, c1)}, "Size Change Animation")
+                end
+                function aY:ReCentre()
+                    t:Animate(_, {Position = UDim2.new(0.5, 0, 0.5, 0)}, "Position Change Animation")
+                    return aY
+                end
+                function ReCentre()
+                    t:Animate(_, {Position = UDim2.new(0.5, 0, 0.5, 0)}, "Position Change Animation")
+                end
+                function aY:ChangePosition(c0, c1)
+                    c0 = c0 or Y.Sizes.X
+                    c1 = c1 or Y.Sizes.Y
+                    Y.Sizes.X = c0
+                    Y.Sizes.Y = c1
+                    t:Animate(_, {Position = UDim2.new(c0, 0, c1, 0)}, "Position Change Animation")
+                    return aY
+                end
+                function ChangePosition(c0, c1)
+                    c0 = c0 or Y.Sizes.X
+                    c1 = c1 or Y.Sizes.Y
+                    Y.Sizes.X = c0
+                    Y.Sizes.Y = c1
+                    t:Animate(_, {Position = UDim2.new(c0, 0, c1, 0)}, "Position Change Animation")
+                end
+                function aY:AttachPosition(c2)
+                    c2 = c2 or "center"
+                    if c2 == "centre" then
+                        t:Animate(_, {Position = UDim2.new(0.5, 0, 0.5, 0)}, "Position Change Animation")
+                    elseif c2 == "left" then
+                        t:Animate(_, {Position = UDim2.new(0.1, 0, 0.5, 0)}, "Position Change Animation")
+                    elseif c2 == "top left" then
+                        t:Animate(_, {Position = UDim2.new(0.1, 0, 0.23, 0)}, "Position Change Animation")
+                    elseif c2 == "bottom left" then
+                        t:Animate(_, {Position = UDim2.new(0.1, 0, 0.77, 0)}, "Position Change Animation")
+                    elseif c2 == "top center" then
+                        t:Animate(_, {Position = UDim2.new(0.5, 0, 0.77, 0)}, "Position Change Animation")
+                    elseif c2 == "bottom center" then
+                        t:Animate(_, {Position = UDim2.new(0.5, 0, 0.23, 0)}, "Position Change Animation")
+                    elseif c2 == "right" then
+                        t:Animate(_, {Position = UDim2.new(0.9, 0, 0.5, 0)}, "Position Change Animation")
+                    elseif c2 == "top right" then
+                        t:Animate(_, {Position = UDim2.new(0.9, 0, 0.23, 0)}, "Position Change Animation")
+                    elseif c2 == "bottom right" then
+                        t:Animate(_, {Position = UDim2.new(0.9, 0, 0.77, 0)}, "Position Change Animation")
+                    end
+                    return aY
+                end
+                function AttachPosition(c2)
+                    c2 = c2 or "center"
+                    if c2 == "center" then
+                        t:Animate(_, {Position = UDim2.new(0.5, 0, 0.5, 0)}, "Position Change Animation")
+                    elseif c2 == "left" then
+                        t:Animate(_, {Position = UDim2.new(0.1, 0, 0.5, 0)}, "Position Change Animation")
+                    elseif c2 == "top left" then
+                        t:Animate(_, {Position = UDim2.new(0.1, 0, 0.23, 0)}, "Position Change Animation")
+                    elseif c2 == "bottom left" then
+                        t:Animate(_, {Position = UDim2.new(0.1, 0, 0.77, 0)}, "Position Change Animation")
+                    elseif c2 == "top center" then
+                        t:Animate(_, {Position = UDim2.new(0.5, 0, 0.77, 0)}, "Position Change Animation")
+                    elseif c2 == "bottom center" then
+                        t:Animate(_, {Position = UDim2.new(0.5, 0, 0.23, 0)}, "Position Change Animation")
+                    elseif c2 == "right" then
+                        t:Animate(_, {Position = UDim2.new(0.9, 0, 0.5, 0)}, "Position Change Animation")
+                    elseif c2 == "top right" then
+                        t:Animate(_, {Position = UDim2.new(0.9, 0, 0.23, 0)}, "Position Change Animation")
+                    elseif c2 == "bottom right" then
+                        t:Animate(_, {Position = UDim2.new(0.9, 0, 0.77, 0)}, "Position Change Animation")
+                    end
+                end
+                function aY:Delete()
+                    s:Delete()
+                    return aY
+                end
+                function DeleteMenu()
+                    s:Delete()
+                end
+                function aY:Hide()
+                    s:Toggle(false)
+                    return aY
+                end
+                function HideMenu()
+                    s:Toggle(false)
+                end
+                function aY:Show()
+                    s:Toggle(true)
+                    return aY
+                end
+                function ShowMenu()
+                    s:Toggle(true)
+                end
+                function aY:ChangeLatency(bz)
+                    bz = bz or Y.Latency
+                    getgenv().Latency = bz
+                    return aY
+                end
+                function ChangeLatency(bz)
+                    bz = bz or Y.Latency
+                    getgenv().Latency = bz
+                end
+                function aY:ChangeCallback(bz)
+                    bz = bz or function()
+                        end
+                    Y.Callback = bz
+                    return aY
+                end
+                Y.Callback()
+                return aY
+            end
+        end
+        if X == "notifications" and W.UI.Notifications == false then
+            W.UI.Notifications = true
+        end
+        if X == "watermark" and W.UI.Watermark == false then
+            W.UI.Watermark = true
+        end
+        if X == "whitelist" and W.UI.Whitelist == false then
+            W.UI.Whitelist = true
+        end
+        if X == "introduction" and W.UI.Introduction == false then
+            W.UI.Introduction = true
+        end
+    end
+end
